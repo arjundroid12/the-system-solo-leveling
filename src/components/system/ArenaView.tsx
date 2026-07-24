@@ -194,7 +194,7 @@ function PvpTab() {
               <p className="text-[10px] text-[var(--system-text-dim)]">LV {opp.level} {opp.job !== 'NONE' && `· ${opp.job}`} · "{opp.title}"</p>
               <p className="text-[10px] mt-1 sl-glow-shadow">POWER: {opp.power}</p>
             </div>
-            <button onClick={() => battle(opp.id)} disabled={battling} className="sl-btn sl-btn-red px-3 py-1.5 text-[10px]">⚔️ FIGHT</button>
+            <button onClick={() => battle(opp.id)} disabled={battling} className="sl-btn sl-btn-red px-4 text-[10px] min-h-[40px] shrink-0">⚔️ FIGHT</button>
           </div>
         </div>
       ))}

@@ -85,12 +85,12 @@ export function AIChatPanel({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div className="fixed inset-0 z-[150] bg-black/80 flex items-end md:items-center justify-center" onClick={onClose}>
-      <div className="sl-window w-full max-w-md h-[80vh] md:h-[600px] flex flex-col" onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-[150] bg-black/80 flex items-end md:items-center justify-center" style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }} onClick={onClose}>
+      <div className="sl-window w-full max-w-md h-[80dvh] md:h-[600px] flex flex-col" onClick={e => e.stopPropagation()}>
         {/* Header */}
         <div className="sl-title-bar flex-shrink-0">
           <span>◆ SYSTEM AI — GROWTH COACH</span>
-          <button onClick={onClose} className="ml-auto text-[var(--system-text-dim)] hover:text-[var(--system-cyan)]">✕</button>
+          <button onClick={onClose} className="ml-auto text-[var(--system-text-dim)] hover:text-[var(--system-cyan)] w-10 h-10 flex items-center justify-center -mr-2 text-base">✕</button>
         </div>
 
         {/* Messages */}
@@ -139,7 +139,7 @@ export function AIChatPanel({ onClose }: { onClose: () => void }) {
               className="flex-1 bg-transparent border border-[var(--system-border)] text-[var(--system-text)] text-xs px-3 py-2 outline-none focus:border-[var(--system-cyan)]"
               disabled={loading}
             />
-            <button onClick={send} disabled={loading || !input.trim()} className="sl-btn px-4 py-2 text-[10px]">
+            <button onClick={send} disabled={loading || !input.trim()} className="sl-btn px-4 text-[10px] min-h-[44px]">
               {loading ? '...' : 'SEND'}
             </button>
           </div>

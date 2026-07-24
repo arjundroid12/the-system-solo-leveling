@@ -52,7 +52,7 @@ export function SystemNotifications() {
     <>
       {/* corner toasts — never block the page */}
       {toasts.length > 0 && (
-        <div className="fixed z-[100] top-[104px] lg:top-6 right-3 left-3 lg:left-auto lg:w-[340px] space-y-2 pointer-events-none">
+        <div className="fixed z-[100] top-[calc(104px+env(safe-area-inset-top))] lg:top-6 left-[max(0.75rem,env(safe-area-inset-left))] right-[max(0.75rem,env(safe-area-inset-right))] lg:left-auto lg:w-[340px] space-y-2 pointer-events-none">
           {toasts.map(n => {
             const style = TYPE_STYLES[n.type] || TYPE_STYLES.SYSTEM
             return (

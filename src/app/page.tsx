@@ -105,8 +105,8 @@ export default function Home() {
   // Onboarding gate — new accounts pick a growth path (skippable)
   if (needsOnboarding) {
     return (
-      <div className="min-h-screen relative z-[1]">
-        <div className="max-w-md mx-auto pt-6 px-4 pb-10">
+      <div className="min-h-screen min-h-dvh relative z-[1]">
+        <div className="max-w-md mx-auto px-4 pb-10" style={{ paddingTop: 'calc(24px + env(safe-area-inset-top))' }}>
           <div className="text-center mb-5">
             <p className="font-display text-xl sl-glow-blue">THE SYSTEM</p>
             <p className="sl-label mt-1.5">◆ FIRST-TIME SETUP · DECLARE YOUR FIRST OBJECTIVE ◆</p>
@@ -127,11 +127,11 @@ export default function Home() {
   const xpPct = Math.max(0, Math.min(100, (player.xp / player.xpToNext) * 100))
 
   return (
-    <div className="min-h-screen flex relative z-[1]">
+    <div className="min-h-screen min-h-dvh flex relative z-[1]">
       <div className="sl-scan-line" />
 
       {/* ═══ Desktop side rail ═══ */}
-      <aside className="hidden lg:flex flex-col w-64 shrink-0 sticky top-0 h-screen border-r border-[rgba(30,144,255,0.18)] bg-gradient-to-b from-[rgba(6,11,24,0.7)] to-[rgba(2,4,9,0.4)] backdrop-blur-md">
+      <aside className="hidden lg:flex flex-col w-64 shrink-0 sticky top-0 h-screen h-dvh border-r border-[rgba(30,144,255,0.18)] bg-gradient-to-b from-[rgba(6,11,24,0.7)] to-[rgba(2,4,9,0.4)] backdrop-blur-md">
         <div className="px-6 pt-7 pb-5">
           <p className="font-display text-xl sl-glow-blue leading-none">THE SYSTEM</p>
           <p className="sl-label-faint mt-2">◆ PLAYER INTERFACE ◆</p>
@@ -181,7 +181,7 @@ export default function Home() {
       {/* ═══ Main column ═══ */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* mobile header — game HUD */}
-        <header className="lg:hidden sticky top-0 z-40 bg-[rgba(2,4,9,0.82)] backdrop-blur-xl border-b border-[rgba(30,144,255,0.28)]">
+        <header className="lg:hidden sticky top-0 z-40 bg-[rgba(2,4,9,0.82)] backdrop-blur-xl border-b border-[rgba(30,144,255,0.28)]" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
           <div className="px-4 pt-2.5 pb-2 max-w-[480px] mx-auto">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
@@ -191,7 +191,7 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <BuffChips />
                 {(player.streak || 0) >= 3 && <span className="text-[10px] sl-glow-gold">🔥{player.streak}</span>}
-                <button onClick={handleRefresh} disabled={isRefreshing} className="sl-btn sl-btn-ghost px-2 py-1 text-[10px]" title="Force sync">
+                <button onClick={handleRefresh} disabled={isRefreshing} className="sl-btn sl-btn-ghost text-[10px] min-w-[40px] min-h-[40px] flex items-center justify-center" title="Force sync">
                   {isRefreshing ? '…' : '⟳'}
                 </button>
               </div>
@@ -292,8 +292,8 @@ export default function Home() {
       {/* AI Coach */}
       <button
         onClick={() => { soundClick(); setShowAIChat(true) }}
-        className="fixed bottom-24 lg:bottom-5 right-4 z-50 w-12 h-12 border-2 border-[var(--system-cyan)] bg-[rgba(12,21,40,0.85)] backdrop-blur flex items-center justify-center text-xl sl-glow-blue sl-glow-pulse"
-        style={{ clipPath: 'polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)' }}
+        className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] lg:bottom-5 z-50 w-12 h-12 border-2 border-[var(--system-cyan)] bg-[rgba(12,21,40,0.85)] backdrop-blur flex items-center justify-center text-xl sl-glow-blue sl-glow-pulse"
+        style={{ clipPath: 'polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)', right: 'calc(1rem + env(safe-area-inset-right))' }}
         aria-label="AI Coach"
       >
         ◆

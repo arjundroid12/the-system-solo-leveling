@@ -161,9 +161,9 @@ export function ObjectivesView({ onCreated }: { onCreated?: () => void }) {
               )}
 
               <div className="flex gap-2">
-                <button onClick={() => handleAnalyze(o.id)} disabled={!!analyzing} className="sl-btn flex-1 text-[10px] py-2">{analyzing === o.id ? '◆ ANALYZING…' : '◈ ANALYZE'}</button>
-                <button onClick={() => { soundClick(); mutateObjective(o.id, 'pause') }} className="sl-btn sl-btn-ghost px-3 py-2 text-[10px]">⏸</button>
-                <button onClick={() => { if (confirm(`Abandon "${o.title}"? The program and history will be erased.`)) mutateObjective(o.id, 'delete') }} className="sl-btn sl-btn-red px-3 py-2 text-[10px]">✕</button>
+                <button onClick={() => handleAnalyze(o.id)} disabled={!!analyzing} className="sl-btn flex-1 text-[10px] min-h-[44px]">{analyzing === o.id ? '◆ ANALYZING…' : '◈ ANALYZE'}</button>
+                <button onClick={() => { soundClick(); mutateObjective(o.id, 'pause') }} className="sl-btn sl-btn-ghost text-[12px] w-11 h-11 flex items-center justify-center shrink-0" aria-label="Pause">⏸</button>
+                <button onClick={() => { if (confirm(`Abandon "${o.title}"? The program and history will be erased.`)) mutateObjective(o.id, 'delete') }} className="sl-btn sl-btn-red text-[12px] w-11 h-11 flex items-center justify-center shrink-0" aria-label="Abandon">✕</button>
               </div>
             </div>
           </div>

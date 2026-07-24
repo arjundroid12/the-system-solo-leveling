@@ -94,13 +94,13 @@ function QuestCard({ quest, onComplete, onProgress, hasStealth, onSkip, delay }:
           <div className="space-y-2">
             <div className="flex gap-2">
               <button onClick={handleIncrement} className="sl-btn flex-1 text-[12px] py-3">+{incrementValue}</button>
-              <select value={incrementValue} onChange={e => setIncrementValue(parseInt(e.target.value))} className="bg-transparent border border-[var(--system-border)] text-[var(--system-cyan)] text-[12px] px-3 outline-none">
+              <select value={incrementValue} onChange={e => setIncrementValue(parseInt(e.target.value))} className="bg-transparent border border-[var(--system-border)] text-[var(--system-cyan)] text-[12px] px-3 min-h-[44px] outline-none">
                 <option value={1} className="bg-[var(--system-dark)]">+1</option><option value={5} className="bg-[var(--system-dark)]">+5</option><option value={10} className="bg-[var(--system-dark)]">+10</option><option value={25} className="bg-[var(--system-dark)]">+25</option>
               </select>
               <button onClick={() => setShowInput(!showInput)} className="sl-btn px-4 py-3 text-[12px]">⋯</button>
             </div>
-            {showInput && <div className="flex gap-2"><input type="number" value={customValue} onChange={e => setCustomValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleCustomSubmit()} placeholder="Set exact" className="flex-1 bg-transparent border border-[var(--system-border)] text-[var(--system-cyan)] text-xs px-2 py-1 outline-none" /><button onClick={handleCustomSubmit} className="sl-btn px-3 py-1 text-[10px]">SET</button></div>}
-            {hasStealth && <button onClick={onSkip} className="sl-btn sl-btn-red w-full text-[10px] py-1.5">STEALTH SKIP</button>}
+            {showInput && <div className="flex gap-2"><input type="number" value={customValue} onChange={e => setCustomValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleCustomSubmit()} placeholder="Set exact" className="flex-1 bg-transparent border border-[var(--system-border)] text-[var(--system-cyan)] text-xs px-3 min-h-[44px] outline-none" /><button onClick={handleCustomSubmit} className="sl-btn px-4 text-[10px] min-h-[44px]">SET</button></div>}
+            {hasStealth && <button onClick={onSkip} className="sl-btn sl-btn-red w-full text-[10px] min-h-[40px]">STEALTH SKIP</button>}
           </div>
         ) : <button onClick={onComplete} className="sl-btn sl-btn-gold w-full text-[11px] py-2.5 sl-glow-pulse">◆ COMPLETE QUEST ◆</button>}
       </div>

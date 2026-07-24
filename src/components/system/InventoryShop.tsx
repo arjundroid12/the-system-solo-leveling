@@ -77,7 +77,7 @@ export function InventoryShop() {
                       <div className="flex items-baseline justify-between"><p className="text-xs font-bold" style={{ color: RARITY_COLORS[item.rarity], textShadow: `0 0 6px ${RARITY_COLORS[item.rarity]}` }}>{item.name}</p><span className="text-[10px] text-[var(--system-text-dim)]">x{item.quantity}</span></div>
                       <p className="text-[10px] text-[var(--system-text-dim)] mt-0.5">{item.description}</p>
                     </div>
-                    {item.type === 'CONSUMABLE' && <button onClick={() => { soundClick(); useItem(item.id) }} className="sl-btn px-3 py-1.5 text-[10px]">USE</button>}
+                    {item.type === 'CONSUMABLE' && <button onClick={() => { soundClick(); useItem(item.id) }} className="sl-btn px-4 text-[10px] min-h-[40px]">USE</button>}
                   </div>
                 </div>
               ))}
@@ -120,7 +120,7 @@ export function InventoryShop() {
                       <p className="text-[10px] text-[var(--system-text-dim)] mt-0.5">{item.description}</p>
                       <p className="text-[10px] mt-1" style={{ color: RARITY_COLORS[item.rarity] }}>[{item.rarity}] · {cost} PP</p>
                     </div>
-                    <button onClick={() => { soundPurchase(); buyItem(item.id) }} disabled={!canAfford} className="sl-btn sl-btn-gold px-3 py-1.5 text-[10px]">BUY</button>
+                    <button onClick={() => { soundPurchase(); buyItem(item.id) }} disabled={!canAfford} className="sl-btn sl-btn-gold px-4 text-[10px] min-h-[40px]">BUY</button>
                   </div>
                 </div>
               )

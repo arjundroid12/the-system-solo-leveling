@@ -75,6 +75,14 @@ html, body {
   -webkit-font-smoothing: antialiased;
   margin: 0; padding: 0;
   min-height: 100vh; min-height: 100dvh;
+  overflow-x: hidden;  /* safety net: no over-wide row can horizontally scroll the page */
+}
+
+/* iOS Safari force-zooms the page when a focused field is < 16px. Touch-only
+   so the compact desktop sizing is preserved. !important beats Tailwind's
+   .text-xs / .text-sm on the element. */
+@media (pointer: coarse) {
+  input, textarea, select { font-size: 16px !important; }
 }
 
 /* ── ambient field: aurora + blueprint grid + vignette ── */

@@ -62,7 +62,7 @@ export function ShadowArmy() {
                   </div>
                 </div>
                 <div className="mt-2 flex gap-2">
-                  <button onClick={() => { soundClick(); shadow.deployed ? undeployShadow(shadow.id) : deployShadow(shadow.id) }} className={`sl-btn flex-1 text-[10px] py-1.5 ${shadow.deployed ? 'sl-btn-red' : ''}`}>
+                  <button onClick={() => { soundClick(); shadow.deployed ? undeployShadow(shadow.id) : deployShadow(shadow.id) }} className={`sl-btn flex-1 text-[10px] min-h-[40px] ${shadow.deployed ? 'sl-btn-red' : ''}`}>
                     {shadow.deployed ? 'UNDEPLOY' : '◆ DEPLOY'}
                   </button>
                 </div>
