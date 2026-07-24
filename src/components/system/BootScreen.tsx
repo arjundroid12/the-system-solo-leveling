@@ -70,8 +70,8 @@ export function BootScreen() {
       <div className="sl-window sl-window-glow sl-glow-pulse max-w-sm w-full sl-slide-in">
         <div className="sl-title-bar justify-center"><span>[ SYSTEM ]</span></div>
         <div className="p-8">
-          <p className="text-xs sl-glow-blue mb-6 tracking-widest">◆ ◆ ◆</p>
-          <h1 className="font-display text-2xl sl-glow-blue mb-4">THE SYSTEM</h1>
+          <p className="text-xs text-[var(--system-violet)] mb-6 tracking-[0.5em]">◆ ◆ ◆</p>
+          <h1 className="sl-numeral text-5xl mb-5 uppercase tracking-[0.08em]">THE SYSTEM</h1>
           <p className="text-xs text-[var(--system-text-dim)] mb-8 leading-relaxed">You have acquired the qualifications<br />to be a Player.</p>
           <button onClick={() => setPhase('choice')} className="sl-btn w-full">ENTER</button>
         </div>

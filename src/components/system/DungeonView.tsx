@@ -43,7 +43,7 @@ export function DungeonView() {
           <div className="p-6 text-center">
             <p className="text-2xl mb-1">{DUNGEON_TYPES[activeDungeon.type].icon}</p>
             <h2 className="font-display text-xl sl-glow-blue mb-4">{activeDungeon.name}</h2>
-            <div className="font-display text-6xl sl-glow-gold mb-3 tabular-nums tracking-wider">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</div>
+            <div className="sl-numeral text-8xl mb-4 tabular-nums">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</div>
             <div className="sl-bar mb-5" style={{ height: 6 }}><div className="sl-bar-fill sl-bar-fill-mp" style={{ width: `${percent}%` }} /></div>
             <div className="flex justify-center flex-wrap gap-1.5 mb-6">
               <span className="sl-chip sl-glow-gold">+{activeDungeon.xpReward} XP</span>
