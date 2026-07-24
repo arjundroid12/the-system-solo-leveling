@@ -93,11 +93,11 @@ function QuestCard({ quest, onComplete, onProgress, hasStealth, onSkip, delay }:
         {!isComplete ? (
           <div className="space-y-2">
             <div className="flex gap-2">
-              <button onClick={handleIncrement} className="sl-btn flex-1 text-[10px] py-2">+{incrementValue}</button>
-              <select value={incrementValue} onChange={e => setIncrementValue(parseInt(e.target.value))} className="bg-transparent border border-[var(--system-border)] text-[var(--system-cyan)] text-[10px] px-2 outline-none">
+              <button onClick={handleIncrement} className="sl-btn flex-1 text-[12px] py-3">+{incrementValue}</button>
+              <select value={incrementValue} onChange={e => setIncrementValue(parseInt(e.target.value))} className="bg-transparent border border-[var(--system-border)] text-[var(--system-cyan)] text-[12px] px-3 outline-none">
                 <option value={1} className="bg-[var(--system-dark)]">+1</option><option value={5} className="bg-[var(--system-dark)]">+5</option><option value={10} className="bg-[var(--system-dark)]">+10</option><option value={25} className="bg-[var(--system-dark)]">+25</option>
               </select>
-              <button onClick={() => setShowInput(!showInput)} className="sl-btn px-3 py-2 text-[10px]">⋯</button>
+              <button onClick={() => setShowInput(!showInput)} className="sl-btn px-4 py-3 text-[12px]">⋯</button>
             </div>
             {showInput && <div className="flex gap-2"><input type="number" value={customValue} onChange={e => setCustomValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleCustomSubmit()} placeholder="Set exact" className="flex-1 bg-transparent border border-[var(--system-border)] text-[var(--system-cyan)] text-xs px-2 py-1 outline-none" /><button onClick={handleCustomSubmit} className="sl-btn px-3 py-1 text-[10px]">SET</button></div>}
             {hasStealth && <button onClick={onSkip} className="sl-btn sl-btn-red w-full text-[10px] py-1.5">STEALTH SKIP</button>}

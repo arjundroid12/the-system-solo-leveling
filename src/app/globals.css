@@ -160,8 +160,8 @@ body::after {
 .font-display { font-family: var(--font-display), "Cinzel", ui-serif, Georgia, serif; font-weight: 700; letter-spacing: 0.05em; }
 .font-mono { font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace; }
 
-.sl-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--system-text-dim); }
-.sl-label-faint { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--system-text-faint); }
+.sl-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--system-text-dim); }
+.sl-label-faint { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--system-text-faint); }
 
 .sl-glow-blue { color: var(--system-cyan); text-shadow: 0 0 10px rgba(var(--rgb-cyan), 0.7), 0 0 24px rgba(var(--rgb-blue), 0.4); }
 .sl-glow-gold { color: var(--system-gold); text-shadow: 0 0 10px rgba(var(--rgb-gold), 0.7), 0 0 24px rgba(var(--rgb-gold), 0.35); }
@@ -275,7 +275,7 @@ body::after {
   padding: 6px 2px;
   background: none; border: none;
   color: var(--system-text-faint);
-  font-family: var(--font-mono), monospace; font-size: 8px; letter-spacing: 0.5px; text-transform: uppercase;
+  font-family: var(--font-mono), monospace; font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase;
   cursor: pointer; transition: color 0.2s;
 }
 .sl-nav-btn.active { color: var(--system-cyan); text-shadow: 0 0 8px var(--system-cyan); }

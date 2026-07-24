@@ -52,11 +52,11 @@ export function ObjectiveFeedbackModal() {
             {OPTIONS.map(opt => (
               <button key={opt.key} onClick={() => answer(opt.key)} disabled={busy} className={`sl-btn ${opt.cls} w-full py-3 flex-col`}>
                 <span className="text-[11px]">{opt.label}</span>
-                <span className="text-[9px] opacity-70 normal-case tracking-normal">{opt.sub}</span>
+                <span className="text-[10px] opacity-70 normal-case tracking-normal">{opt.sub}</span>
               </button>
             ))}
           </div>
-          <p className="text-[9px] text-center text-[var(--system-text-faint)] mt-4">The System adjusts tomorrow's prescription based on your answer.</p>
+          <p className="text-[10px] text-center text-[var(--system-text-faint)] mt-4">The System adjusts tomorrow's prescription based on your answer.</p>
         </div>
       </div>
     </div>

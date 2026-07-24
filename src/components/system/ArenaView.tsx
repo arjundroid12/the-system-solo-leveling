@@ -30,11 +30,11 @@ export function ArenaView() {
           <p className="text-[10px] text-[var(--system-text-dim)] mt-1">{rankInfo.desc}</p>
           <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
             <div className="border border-[var(--system-border)] p-2">
-              <p className="text-[9px] text-[var(--system-text-dim)]">ARMY POWER</p>
+              <p className="text-[10px] text-[var(--system-text-dim)]">ARMY POWER</p>
               <p className="font-display text-base sl-glow-shadow">{armyPower}</p>
             </div>
             <div className="border border-[var(--system-border)] p-2">
-              <p className="text-[9px] text-[var(--system-text-dim)]">PLAYER LV</p>
+              <p className="text-[10px] text-[var(--system-text-dim)]">PLAYER LV</p>
               <p className="font-display text-base sl-glow-gold">{player.level}</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ function RankingsTab() {
       <div className="sl-window sl-slide-in p-3 text-center">
         <p className="text-[10px] text-[var(--system-text-dim)]">YOUR RANK</p>
         <p className="font-display text-2xl sl-glow-gold">#{myRank}</p>
-        <p className="text-[9px] text-[var(--system-text-dim)] mt-1">Out of {leaderboard.length} Players</p>
+        <p className="text-[10px] text-[var(--system-text-dim)] mt-1">Out of {leaderboard.length} Players</p>
       </div>
       {leaderboard.slice(0, 20).map((p, i) => (
         <div key={p.id} className={`sl-window sl-slide-in ${p.isMe ? 'sl-window-glow' : ''}`} style={{ animationDelay: `${i * 0.03}s` }}>
@@ -92,11 +92,11 @@ function RankingsTab() {
             <span className={`font-display text-lg w-8 text-center ${i < 3 ? 'sl-glow-gold' : 'text-[var(--system-text-dim)]'}`}>{i + 1}</span>
             <div className="flex-1">
               <p className={`text-xs ${p.isMe ? 'sl-glow-blue' : ''}`}>{p.name} {p.isMe && '(YOU)'}</p>
-              <p className="text-[9px] text-[var(--system-text-dim)]">LV {p.level} {p.job !== 'NONE' && `· ${p.job}`} · "{p.title}"</p>
+              <p className="text-[10px] text-[var(--system-text-dim)]">LV {p.level} {p.job !== 'NONE' && `· ${p.job}`} · "{p.title}"</p>
             </div>
             <div className="text-right">
               <p className="font-display text-sm sl-glow-shadow">{p.power}</p>
-              <p className="text-[9px] text-[var(--system-text-dim)]">POWER</p>
+              <p className="text-[10px] text-[var(--system-text-dim)]">POWER</p>
             </div>
           </div>
         </div>
@@ -158,10 +158,10 @@ function PvpTab() {
           </p>
           <p className="text-xs text-[var(--system-text-dim)] mb-4">{result.myName} vs {result.enemyName}</p>
           <div className="grid grid-cols-2 gap-2 text-xs mb-4">
-            <div className="border border-[var(--system-border)] p-2"><p className="text-[9px] text-[var(--system-text-dim)]">YOUR POWER</p><p className="sl-glow-blue">{result.myPower}</p></div>
-            <div className="border border-[var(--system-border)] p-2"><p className="text-[9px] text-[var(--system-text-dim)]">ENEMY POWER</p><p className="sl-glow-red">{result.enemyPower}</p></div>
-            <div className="border border-[var(--system-border)] p-2"><p className="text-[9px] text-[var(--system-text-dim)]">DAMAGE DEALT</p><p className="sl-glow-gold">{result.result.playerDamage}</p></div>
-            <div className="border border-[var(--system-border)] p-2"><p className="text-[9px] text-[var(--system-text-dim)]">DAMAGE TAKEN</p><p className="sl-glow-red">{result.result.enemyDamage}</p></div>
+            <div className="border border-[var(--system-border)] p-2"><p className="text-[10px] text-[var(--system-text-dim)]">YOUR POWER</p><p className="sl-glow-blue">{result.myPower}</p></div>
+            <div className="border border-[var(--system-border)] p-2"><p className="text-[10px] text-[var(--system-text-dim)]">ENEMY POWER</p><p className="sl-glow-red">{result.enemyPower}</p></div>
+            <div className="border border-[var(--system-border)] p-2"><p className="text-[10px] text-[var(--system-text-dim)]">DAMAGE DEALT</p><p className="sl-glow-gold">{result.result.playerDamage}</p></div>
+            <div className="border border-[var(--system-border)] p-2"><p className="text-[10px] text-[var(--system-text-dim)]">DAMAGE TAKEN</p><p className="sl-glow-red">{result.result.enemyDamage}</p></div>
           </div>
           <p className="text-xs mb-4">Rounds: {result.result.rounds}</p>
           <div className="space-y-1 mb-4">
@@ -191,8 +191,8 @@ function PvpTab() {
             </div>
             <div className="flex-1">
               <p className="text-xs sl-glow-blue">{opp.name}</p>
-              <p className="text-[9px] text-[var(--system-text-dim)]">LV {opp.level} {opp.job !== 'NONE' && `· ${opp.job}`} · "{opp.title}"</p>
-              <p className="text-[9px] mt-1 sl-glow-shadow">POWER: {opp.power}</p>
+              <p className="text-[10px] text-[var(--system-text-dim)]">LV {opp.level} {opp.job !== 'NONE' && `· ${opp.job}`} · "{opp.title}"</p>
+              <p className="text-[10px] mt-1 sl-glow-shadow">POWER: {opp.power}</p>
             </div>
             <button onClick={() => battle(opp.id)} disabled={battling} className="sl-btn sl-btn-red px-3 py-1.5 text-[10px]">⚔️ FIGHT</button>
           </div>
@@ -270,7 +270,7 @@ function BossTab() {
         <div className="p-6 text-center">
           <p className="text-5xl mb-3">{boss.icon}</p>
           <p className="font-display text-lg sl-glow-purple mb-1">{boss.name}</p>
-          <p className="text-[9px] text-[var(--system-text-dim)] mb-4">{boss.description}</p>
+          <p className="text-[10px] text-[var(--system-text-dim)] mb-4">{boss.description}</p>
 
           {/* Boss HP bar */}
           <div className="mb-4">
@@ -310,7 +310,7 @@ function BossTab() {
       )}
 
       <div className="sl-window sl-slide-in p-3">
-        <p className="text-[9px] text-[var(--system-text-dim)] leading-relaxed text-center">
+        <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed text-center">
           The player who lands the killing blow gets the full rewards + a special title.<br />
           Damage scales with your Army Power. Deploy more shadows for more damage.
         </p>

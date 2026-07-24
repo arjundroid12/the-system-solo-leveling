@@ -62,11 +62,11 @@ function SkillRow({ skill, playerLevel, onUnlock }: { skill: Skill; playerLevel:
     <div className={`flex items-center gap-3 p-3 border ${skill.unlocked ? 'border-[var(--system-blue)]/40 bg-[var(--system-blue)]/5' : 'border-[var(--system-border)] opacity-60'}`}>
       <span className={`text-xl ${skill.unlocked ? 'sl-glow-blue' : ''}`}>{skill.unlocked ? '✦' : '🔒'}</span>
       <div className="flex-1">
-        <div className="flex items-baseline justify-between"><p className={`text-xs ${skill.unlocked ? 'sl-glow-blue' : 'text-[var(--system-text-dim)]'}`}>{skill.name}</p><span className="text-[9px] sl-glow-purple px-1">[{skill.rank}]</span></div>
-        <p className="text-[9px] text-[var(--system-text-dim)] mt-0.5">{skill.description}</p>
-        {!skill.unlocked && <p className="text-[9px] text-[var(--system-text-dim)] mt-0.5">Unlocks at Level {skill.unlockLevel}</p>}
+        <div className="flex items-baseline justify-between"><p className={`text-xs ${skill.unlocked ? 'sl-glow-blue' : 'text-[var(--system-text-dim)]'}`}>{skill.name}</p><span className="text-[10px] sl-glow-purple px-1">[{skill.rank}]</span></div>
+        <p className="text-[10px] text-[var(--system-text-dim)] mt-0.5">{skill.description}</p>
+        {!skill.unlocked && <p className="text-[10px] text-[var(--system-text-dim)] mt-0.5">Unlocks at Level {skill.unlockLevel}</p>}
       </div>
-      {canUnlock && skill.category === 'ACTIVE' && <button onClick={onUnlock} className="sl-btn px-2 py-1 text-[9px]">UNLOCK</button>}
+      {canUnlock && skill.category === 'ACTIVE' && <button onClick={onUnlock} className="sl-btn px-2 py-1 text-[10px]">UNLOCK</button>}
     </div>
   )
 }

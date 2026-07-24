@@ -75,7 +75,7 @@ export function InventoryShop() {
                     <span className="text-2xl">{item.icon}</span>
                     <div className="flex-1">
                       <div className="flex items-baseline justify-between"><p className="text-xs font-bold" style={{ color: RARITY_COLORS[item.rarity], textShadow: `0 0 6px ${RARITY_COLORS[item.rarity]}` }}>{item.name}</p><span className="text-[10px] text-[var(--system-text-dim)]">x{item.quantity}</span></div>
-                      <p className="text-[9px] text-[var(--system-text-dim)] mt-0.5">{item.description}</p>
+                      <p className="text-[10px] text-[var(--system-text-dim)] mt-0.5">{item.description}</p>
                     </div>
                     {item.type === 'CONSUMABLE' && <button onClick={() => { soundClick(); useItem(item.id) }} className="sl-btn px-3 py-1.5 text-[10px]">USE</button>}
                   </div>
@@ -96,7 +96,7 @@ export function InventoryShop() {
                   <div className="flex items-center justify-between mb-2"><span className="text-xs">🔔 NOTIFICATIONS</span><span className={`text-xs ${pushSubscribed ? 'sl-glow-blue' : pushPermission === 'denied' ? 'sl-glow-red' : 'text-[var(--system-text-dim)]'}`}>{pushSubscribed ? 'ACTIVE' : pushPermission === 'denied' ? 'BLOCKED' : 'OFF'}</span></div>
                   {!pushSubscribed && pushPermission !== 'denied' && <button onClick={handleEnablePush} disabled={pushLoading} className="sl-btn w-full text-[10px] py-2 mb-2">{pushLoading ? '◆ ENABLING...' : '◆ ENABLE DAILY REMINDERS'}</button>}
                   {pushSubscribed && <div className="space-y-2"><button onClick={() => { soundClick(); sendTestNotification() }} className="sl-btn w-full text-[10px] py-1.5">📨 SEND TEST</button><button onClick={handleDisablePush} disabled={pushLoading} className="sl-btn sl-btn-red w-full text-[10px] py-1.5">✕ DISABLE</button></div>}
-                  {pushSubscribed && <p className="text-[9px] text-[var(--system-text-dim)] mt-1">Daily reminders at 9:30 AM IST.</p>}
+                  {pushSubscribed && <p className="text-[10px] text-[var(--system-text-dim)] mt-1">Daily reminders at 9:30 AM IST.</p>}
                 </div>
               ) : <div className="p-2 border border-[var(--system-border)] opacity-50"><div className="flex items-center justify-between"><span className="text-xs">🔔 NOTIFICATIONS</span><span className="text-xs text-[var(--system-text-dim)]">UNSUPPORTED</span></div></div>}
               <button onClick={() => { if (confirm('RESET SYSTEM? All progress will be lost.')) { soundClick(); resetSystem() } }} className="w-full p-2 border border-[var(--system-red)]/30 sl-glow-red text-xs hover:bg-[var(--system-red)]/10">⚠ RESET SYSTEM</button>
@@ -117,8 +117,8 @@ export function InventoryShop() {
                     <span className="text-2xl">{item.icon}</span>
                     <div className="flex-1">
                       <div className="flex items-baseline justify-between"><p className="text-xs font-bold" style={{ color: RARITY_COLORS[item.rarity], textShadow: `0 0 6px ${RARITY_COLORS[item.rarity]}` }}>{item.name}</p>{owned && <span className="text-[10px] text-[var(--system-text-dim)]">x{owned.quantity}</span>}</div>
-                      <p className="text-[9px] text-[var(--system-text-dim)] mt-0.5">{item.description}</p>
-                      <p className="text-[9px] mt-1" style={{ color: RARITY_COLORS[item.rarity] }}>[{item.rarity}] · {cost} PP</p>
+                      <p className="text-[10px] text-[var(--system-text-dim)] mt-0.5">{item.description}</p>
+                      <p className="text-[10px] mt-1" style={{ color: RARITY_COLORS[item.rarity] }}>[{item.rarity}] · {cost} PP</p>
                     </div>
                     <button onClick={() => { soundPurchase(); buyItem(item.id) }} disabled={!canAfford} className="sl-btn sl-btn-gold px-3 py-1.5 text-[10px]">BUY</button>
                   </div>

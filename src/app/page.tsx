@@ -145,7 +145,7 @@ export default function Home() {
             </div>
             <p className="text-[10px] sl-glow-purple mt-2 truncate">"{player.title || 'The Player'}"</p>
             <div className="mt-3">
-              <div className="flex justify-between text-[9px] mb-1"><span className="sl-label">XP</span><span className="sl-glow-gold tabular-nums">{player.xp}/{player.xpToNext}</span></div>
+              <div className="flex justify-between text-[10px] mb-1"><span className="sl-label">XP</span><span className="sl-glow-gold tabular-nums">{player.xp}/{player.xpToNext}</span></div>
               <div className="sl-bar" style={{ height: 5 }}><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${xpPct}%` }} /></div>
             </div>
             {(player.streak || 0) >= 3 && <p className="text-[10px] sl-glow-gold mt-2">🔥 {player.streak}-DAY STREAK</p>}
@@ -192,15 +192,15 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-3 gap-2.5 mt-2">
               <div>
-                <div className="flex justify-between text-[8px] mb-0.5"><span className="sl-label-faint">HP</span><span className="text-[var(--system-red)] tabular-nums">{player.hp}</span></div>
+                <div className="flex justify-between text-[10px] mb-0.5"><span className="sl-label-faint">HP</span><span className="text-[var(--system-red)] tabular-nums">{player.hp}</span></div>
                 <div className="sl-bar" style={{ height: 4 }}><div className="sl-bar-fill sl-bar-fill-hp" style={{ width: `${hpPct}%` }} /></div>
               </div>
               <div>
-                <div className="flex justify-between text-[8px] mb-0.5"><span className="sl-label-faint">MP</span><span className="text-[var(--system-cyan)] tabular-nums">{player.mp}</span></div>
+                <div className="flex justify-between text-[10px] mb-0.5"><span className="sl-label-faint">MP</span><span className="text-[var(--system-cyan)] tabular-nums">{player.mp}</span></div>
                 <div className="sl-bar" style={{ height: 4 }}><div className="sl-bar-fill sl-bar-fill-mp" style={{ width: `${mpPct}%` }} /></div>
               </div>
               <div>
-                <div className="flex justify-between text-[8px] mb-0.5"><span className="sl-label-faint">XP</span><span className="text-[var(--system-gold)] tabular-nums">{player.xp}/{player.xpToNext}</span></div>
+                <div className="flex justify-between text-[10px] mb-0.5"><span className="sl-label-faint">XP</span><span className="text-[var(--system-gold)] tabular-nums">{player.xp}/{player.xpToNext}</span></div>
                 <div className="sl-bar" style={{ height: 4 }}><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${xpPct}%` }} /></div>
               </div>
             </div>

@@ -47,7 +47,7 @@ export function StatusWindow() {
           <StatBar label="MP" current={player.mp} max={player.mpMax} percent={mpPercent} variant="mp" />
           <StatBar label="XP" current={player.xp} max={player.xpToNext} percent={xpPercent} variant="xp" />
           <StatBar label="FTG" current={player.fatigue} max={player.fatigueMax} percent={fatiguePercent} variant="fatigue" warn={fatigueHigh} />
-          {fatigueHigh && <p className="text-[9px] sl-glow-red mt-1 sl-pulse">⚠ EXHAUSTED — XP GAIN REDUCED 25%</p>}
+          {fatigueHigh && <p className="text-[10px] sl-glow-red mt-1 sl-pulse">⚠ EXHAUSTED — XP GAIN REDUCED 25%</p>}
         </div>
       </div>
 
@@ -85,7 +85,7 @@ export function StatusWindow() {
               <button
                 onClick={() => { if (player.statPoints > 0) { soundStatUp(); allocateStat(stat) } }}
                 disabled={player.statPoints === 0}
-                className={`w-7 h-7 border flex items-center justify-center text-sm transition-all ${player.statPoints > 0 ? 'border-[var(--system-cyan)] text-[var(--system-cyan)] sl-glow-blue hover:bg-[rgba(93,213,255,0.1)]' : 'border-[var(--system-border)] text-[var(--system-text-faint)] opacity-40 cursor-not-allowed'}`}
+                className={`w-10 h-10 shrink-0 border flex items-center justify-center text-lg transition-all ${player.statPoints > 0 ? 'border-[var(--system-cyan)] text-[var(--system-cyan)] sl-glow-blue hover:bg-[rgba(93,213,255,0.1)]' : 'border-[var(--system-border)] text-[var(--system-text-faint)] opacity-40 cursor-not-allowed'}`}
               >+</button>
             </div>
           ))}

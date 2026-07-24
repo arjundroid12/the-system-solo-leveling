@@ -55,11 +55,11 @@ export function SkillTreeView() {
           </p>
           <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
             <div className="border border-[var(--system-border)] p-2">
-              <p className="text-[9px] text-[var(--system-text-dim)]">UNLOCKED</p>
+              <p className="text-[10px] text-[var(--system-text-dim)]">UNLOCKED</p>
               <p className="sl-glow-blue">{activeSkills.filter(s => s.unlocked).length}/{activeSkills.length}</p>
             </div>
             <div className="border border-[var(--system-border)] p-2">
-              <p className="text-[9px] text-[var(--system-text-dim)]">YOUR CLASS</p>
+              <p className="text-[10px] text-[var(--system-text-dim)]">YOUR CLASS</p>
               <p className="sl-glow-purple">{JOB_CLASSES[player.job].icon} {JOB_CLASSES[player.job].name}</p>
             </div>
           </div>
@@ -104,18 +104,18 @@ function SkillGroup({ title, icon, skills, player, canUnlock, getLockReason }: {
                 <div className="flex-1">
                   <div className="flex items-baseline justify-between">
                     <p className={`text-xs ${skill.unlocked ? 'sl-glow-blue' : 'text-[var(--system-text-dim)]'}`}>{skill.name}</p>
-                    <span className="text-[9px] px-1 sl-glow-purple">[{skill.effect}]</span>
+                    <span className="text-[10px] px-1 sl-glow-purple">[{skill.effect}]</span>
                   </div>
-                  <p className="text-[9px] text-[var(--system-text-dim)] mt-0.5">{skill.description}</p>
-                  <div className="flex gap-3 mt-1 text-[9px]">
+                  <p className="text-[10px] text-[var(--system-text-dim)] mt-0.5">{skill.description}</p>
+                  <div className="flex gap-3 mt-1 text-[10px]">
                     <span className="sl-glow-blue">MP {skill.mpCost}</span>
                     {skill.damage > 0 && <span className="sl-glow-red">DMG x{skill.damage}</span>}
                     <span className="text-[var(--system-text-dim)]">CD {skill.cooldown}t</span>
                   </div>
-                  {!skill.unlocked && reason && <p className="text-[9px] sl-glow-red mt-1">{reason}</p>}
+                  {!skill.unlocked && reason && <p className="text-[10px] sl-glow-red mt-1">{reason}</p>}
                 </div>
                 {unlockable && (
-                  <button onClick={() => { soundSkillUnlock(); }} className="sl-btn sl-btn-gold px-2 py-1 text-[9px]">UNLOCK</button>
+                  <button onClick={() => { soundSkillUnlock(); }} className="sl-btn sl-btn-gold px-2 py-1 text-[10px]">UNLOCK</button>
                 )}
               </div>
             </div>

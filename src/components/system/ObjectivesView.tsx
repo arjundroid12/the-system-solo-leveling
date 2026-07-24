@@ -123,13 +123,13 @@ export function ObjectivesView({ onCreated }: { onCreated?: () => void }) {
                   </div>
                   <span className={`sl-chip ${todayDone ? 'sl-glow-green' : 'sl-glow-gold sl-pulse'}`}>{todayDone ? '✓ CLEARED' : `+${o.xpReward} XP WAITING`}</span>
                 </div>
-                {!todayDone && <p className="text-[9px] text-[var(--system-text-dim)] mt-2">Complete it from the <span className="sl-glow-blue">QUESTS</span> tab — it's in today's list.</p>}
+                {!todayDone && <p className="text-[10px] text-[var(--system-text-dim)] mt-2">Complete it from the <span className="sl-glow-blue">QUESTS</span> tab — it's in today's list.</p>}
               </div>
 
               {/* progress bars */}
-              <div className="mb-1 flex justify-between text-[9px]"><span className="sl-label">PROGRAM PROGRESS</span><span className="text-[var(--system-text-dim)] tabular-nums">DAY {o.day}/{o.plan.estimatedDays}</span></div>
+              <div className="mb-1 flex justify-between text-[10px]"><span className="sl-label">PROGRAM PROGRESS</span><span className="text-[var(--system-text-dim)] tabular-nums">DAY {o.day}/{o.plan.estimatedDays}</span></div>
               <div className="sl-bar mb-3" style={{ height: 5 }}><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${progressPct}%` }} /></div>
-              <div className="mb-1 flex justify-between text-[9px]"><span className="sl-label">LOAD VS GOAL</span><span className="text-[var(--system-text-dim)] tabular-nums">{o.currentTarget} → {o.plan.maxTarget} {o.unit}</span></div>
+              <div className="mb-1 flex justify-between text-[10px]"><span className="sl-label">LOAD VS GOAL</span><span className="text-[var(--system-text-dim)] tabular-nums">{o.currentTarget} → {o.plan.maxTarget} {o.unit}</span></div>
               <div className="sl-bar mb-3" style={{ height: 5 }}><div className="sl-bar-fill sl-bar-fill-mp" style={{ width: `${targetPct}%` }} /></div>
 
               {/* last 7 days strip */}
@@ -183,7 +183,7 @@ export function ObjectivesView({ onCreated }: { onCreated?: () => void }) {
             {paused.map((o: any) => (
               <div key={o.id} className="flex items-center justify-between gap-2 border border-[var(--system-border)] p-2.5 opacity-70">
                 <p className="text-xs">{o.icon} {o.title} <span className="sl-label-faint">DAY {o.day}</span></p>
-                <button onClick={() => mutateObjective(o.id, 'resume')} className="sl-btn px-3 py-1 text-[9px]">RESUME</button>
+                <button onClick={() => mutateObjective(o.id, 'resume')} className="sl-btn px-3 py-1 text-[10px]">RESUME</button>
               </div>
             ))}
           </div>

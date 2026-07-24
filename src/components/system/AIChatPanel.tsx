@@ -108,7 +108,7 @@ export function AIChatPanel({ onClose }: { onClose: () => void }) {
                 {m.actions && m.actions.length > 0 && (
                   <div className="mt-2 pt-2 border-t border-[var(--system-border)] space-y-1">
                     {m.actions.map((a: any, i: number) => (
-                      <p key={i} className="text-[9px] sl-glow-gold">
+                      <p key={i} className="text-[10px] sl-glow-gold">
                         {a.type === 'CREATE_QUEST' && a.success ? `✓ Created quest: ${a.questTitle}` : ''}
                         {a.type === 'NOTIFY' ? `📢 ${a.title}: ${a.message}` : ''}
                       </p>
