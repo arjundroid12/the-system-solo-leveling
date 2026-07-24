@@ -34,12 +34,12 @@ export async function loginAndPull(): Promise<{ success: boolean; error?: string
   if (!data || !data.player) return { success: false, error: 'Failed to pull data' }
   const p = data.player
 
-  // Check if player has a growth plan (determines onboarding)
-  let hasGrowthPlan = false
+  // Check if player has any objective (determines onboarding)
+  let hasObjective = false
   try {
-    const planRes = await fetch('/api/growth-plan', { headers: { Authorization: `Bearer ${auth.token}` } })
-    const planData = await planRes.json()
-    hasGrowthPlan = !!planData.currentPlan
+    const objRes = await fetch('/api/objectives', { headers: { Authorization: `Bearer ${auth.token}` } })
+    const objData = await objRes.json()
+    hasObjective = (objData.objectives || []).length > 0
   } catch {}
 
   useSystem.setState({
@@ -56,7 +56,7 @@ export async function loginAndPull(): Promise<{ success: boolean; error?: string
       const cs = (data.skills || []).find((cs: any) => cs.id === s.id)
       return cs ? { ...s, unlocked: cs.unlocked } : s
     }),
-    needsOnboarding: !hasGrowthPlan,  // ONBOARDING NEEDED IF NO GROWTH PLAN
+    needsOnboarding: !hasObjective,  // ONBOARDING NEEDED IF NO OBJECTIVE YET
     isRefreshing: false,
   })
   return { success: true }

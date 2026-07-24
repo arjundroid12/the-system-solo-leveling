@@ -12,10 +12,13 @@ import { SkillsPanel } from '@/components/system/SkillsPanel'
 import { InventoryShop } from '@/components/system/InventoryShop'
 import { ArenaView } from '@/components/system/ArenaView'
 import { WorldMap } from '@/components/system/WorldMap'
-import { GrowthPlanView } from '@/components/system/GrowthPlanView'
+import { ObjectivesView } from '@/components/system/ObjectivesView'
+import { ObjectiveFeedbackModal } from '@/components/system/ObjectiveFeedbackModal'
+import { refreshObjectives } from '@/lib/objectives'
 import { AIChatPanel } from '@/components/system/AIChatPanel'
 import { SystemNotifications } from '@/components/system/SystemNotifications'
 import { LevelUpCutscene } from '@/components/system/LevelUpCutscene'
+import { FloatingXP, BuffChips } from '@/components/system/RewardJuice'
 import { setSoundEnabled, soundClick, soundNotification } from '@/lib/sound'
 import { getAuth, apiPull } from '@/lib/auth'
 import { xpForLevel, hpFromStats, mpFromStats, fatigueMaxFromStats } from '@/lib/system'
@@ -52,6 +55,8 @@ export default function Home() {
 
   useEffect(() => { setSoundEnabled(soundEnabled) }, [soundEnabled])
   useEffect(() => { if (booted) { generateQuestsIfNewDay(); useSystem.getState().checkLoginBonus() } }, [booted, generateQuestsIfNewDay])
+  // Objectives: fetch programs + inject today's objective quests into the quest list
+  useEffect(() => { if (booted) refreshObjectives() }, [booted])
 
   // Manual refresh — force-fetch from server
   const handleRefresh = async () => {
@@ -98,11 +103,11 @@ export default function Home() {
         <div className="max-w-md mx-auto pt-6 px-4 pb-10">
           <div className="text-center mb-5">
             <p className="font-display text-xl sl-glow-blue">THE SYSTEM</p>
-            <p className="sl-label mt-1.5">◆ FIRST-TIME SETUP · CHOOSE YOUR PATH ◆</p>
+            <p className="sl-label mt-1.5">◆ FIRST-TIME SETUP · DECLARE YOUR FIRST OBJECTIVE ◆</p>
           </div>
-          <GrowthPlanView onPathSelected={() => setOnboarded()} />
+          <ObjectivesView onCreated={() => setOnboarded()} />
           <button onClick={() => { soundClick(); setOnboarded() }} className="sl-btn sl-btn-ghost w-full mt-4 text-[10px]">
-            SKIP FOR NOW — CHOOSE LATER IN GROWTH
+            SKIP FOR NOW — DECLARE LATER IN GROWTH
           </button>
         </div>
         <SystemNotifications />
@@ -178,6 +183,7 @@ export default function Home() {
                 <span className="sl-chip sl-glow-blue">LV {player.level}</span>
               </div>
               <div className="flex items-center gap-2">
+                <BuffChips />
                 {(player.streak || 0) >= 3 && <span className="text-[10px] sl-glow-gold">🔥{player.streak}</span>}
                 <button onClick={handleRefresh} disabled={isRefreshing} className="sl-btn sl-btn-ghost px-2 py-1 text-[10px]" title="Force sync">
                   {isRefreshing ? '…' : '⟳'}
@@ -206,6 +212,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto px-8 py-4 flex items-center justify-between">
             <h1 className="font-display text-xl sl-glow-blue">{activeNav?.icon} {activeNav?.label}</h1>
             <div className="flex items-center gap-3">
+              <BuffChips />
               <span className="sl-chip"><span className="sl-label-faint">HP</span><span className="sl-glow-red tabular-nums">{player.hp}/{player.hpMax}</span></span>
               <span className="sl-chip"><span className="sl-label-faint">MP</span><span className="sl-glow-blue tabular-nums">{player.mp}/{player.mpMax}</span></span>
               <span className="sl-chip"><span className="sl-label-faint">PP</span><span className="sl-glow-gold tabular-nums">{player.playerPoints}</span></span>
@@ -222,7 +229,7 @@ export default function Home() {
             {tab === 'skills' && <SkillsPanel />}
             {tab === 'arena' && <ArenaView />}
             {tab === 'world' && <WorldMap />}
-            {tab === 'growth' && <GrowthPlanView />}
+            {tab === 'growth' && <ObjectivesView />}
             {tab === 'inventory' && <InventoryShop />}
           </div>
         </main>
@@ -250,6 +257,8 @@ export default function Home() {
       </button>
       {showAIChat && <AIChatPanel onClose={() => setShowAIChat(false)} />}
 
+      <ObjectiveFeedbackModal />
+      <FloatingXP />
       <SystemNotifications />
     </div>
   )

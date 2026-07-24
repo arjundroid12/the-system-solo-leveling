@@ -49,12 +49,17 @@ interface SystemState {
   equipment: Partial<Record<EquipSlot, Equipment>>  // equipped items by slot
   needsOnboarding: boolean  // true for new accounts, false after path selection
   isRefreshing: boolean  // for manual refresh button loading state
+  objectives: any[]  // serialized objectives from /api/objectives
+  pendingObjectiveFeedback: { objectiveId: string; title: string } | null
+  lastReward: { xp: number; pp: number; ts: number } | null  // drives the floating +XP animation
 
   boot: (name: string) => void
   resetSystem: () => void
   toggleSound: () => void
   setOnboarded: () => void
   setRefreshing: (v: boolean) => void
+  setObjectives: (list: any[]) => void
+  setPendingObjectiveFeedback: (v: { objectiveId: string; title: string } | null) => void
 
   generateQuestsIfNewDay: () => void
   updateQuestProgress: (id: string, progress: number) => void
@@ -111,6 +116,11 @@ export const useSystem = create<SystemState>()(
       activeDungeon: null,
       notifications: [],
       soundEnabled: true,
+      objectives: [],
+      pendingObjectiveFeedback: null,
+      lastReward: null,
+      setObjectives: (list) => set({ objectives: list }),
+      setPendingObjectiveFeedback: (v) => set({ pendingObjectiveFeedback: v }),
       levelUpCutscene: null,
       combo: 0,
       comboTimer: 0,
@@ -143,7 +153,7 @@ export const useSystem = create<SystemState>()(
         setTimeout(() => soundNotification(), 800)
       },
 
-      resetSystem: () => set({ booted: false, player: null, quests: [], skills: SKILLS, shadows: [], inventory: [], activeDungeon: null, notifications: [], levelUpCutscene: null, needsOnboarding: false, isRefreshing: false }),
+      resetSystem: () => set({ booted: false, player: null, quests: [], skills: SKILLS, shadows: [], inventory: [], activeDungeon: null, notifications: [], levelUpCutscene: null, needsOnboarding: false, isRefreshing: false, objectives: [], pendingObjectiveFeedback: null, lastReward: null }),
 
       setOnboarded: () => set({ needsOnboarding: false }),
       setRefreshing: (v: boolean) => set({ isRefreshing: v }),
@@ -238,6 +248,7 @@ export const useSystem = create<SystemState>()(
         const effectiveMult = get().getEffectiveXpMultiplier()
         const finalXp = Math.floor(quest.xpReward * effectiveMult)
         get().applyXp(finalXp)
+        set({ lastReward: { xp: finalXp, pp: quest.pointReward, ts: Date.now() } })
 
         // Build bonus message
         const comboInfo = getComboMultiplier(currentCombo)

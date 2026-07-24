@@ -28,6 +28,16 @@ export function QuestPanel() {
     setRegenerating(false)
   }
 
+  // Objective quests (id: obj-<objectiveId>-<date>) ask for a difficulty
+  // assessment after completion — that's what drives progressive overload.
+  const handleComplete = (quest: Quest) => {
+    completeQuest(quest.id)
+    if (quest.id.startsWith('obj-')) {
+      const objectiveId = quest.id.slice(4).split('-')[0]
+      useSystem.getState().setPendingObjectiveFeedback({ objectiveId, title: quest.title })
+    }
+  }
+
   const dayPercent = quests.length > 0 ? (completed.length / quests.length) * 100 : 0
 
   return (
@@ -44,7 +54,7 @@ export function QuestPanel() {
           <button onClick={handleRegenerate} disabled={regenerating} className="sl-btn sl-btn-ghost w-full mt-3 text-[10px] py-2">{regenerating ? '◆ ANALYZING…' : '⟳ REGENERATE QUESTS'}</button>
         </div>
       </div>
-      {pending.map((quest, i) => <QuestCard key={quest.id} quest={quest} onComplete={() => completeQuest(quest.id)} onProgress={p => updateQuestProgress(quest.id, p)} hasStealth={!!hasStealth} onSkip={() => useSystem.getState().skipQuest(quest.id)} delay={i * 0.05} />)}
+      {pending.map((quest, i) => <QuestCard key={quest.id} quest={quest} onComplete={() => handleComplete(quest)} onProgress={p => updateQuestProgress(quest.id, p)} hasStealth={!!hasStealth} onSkip={() => useSystem.getState().skipQuest(quest.id)} delay={i * 0.05} />)}
       {completed.length > 0 && (
         <div className="sl-window sl-slide-in">
           <div className="sl-title-bar"><span>◆ COMPLETED</span></div>
