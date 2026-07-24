@@ -28,17 +28,20 @@ export function QuestPanel() {
     setRegenerating(false)
   }
 
+  const dayPercent = quests.length > 0 ? (completed.length / quests.length) * 100 : 0
+
   return (
     <div className="px-4 py-4 space-y-3">
       <div className="sl-window sl-window-glow sl-slide-in">
-        <div className="sl-title-bar"><span>◆ DAILY QUESTS</span><span className="ml-auto text-[10px] sl-glow-blue">{completed.length}/{quests.length} COMPLETE</span></div>
+        <div className="sl-title-bar"><span>◆ DAILY QUESTS</span><span className="ml-auto text-[10px] sl-glow-blue tabular-nums">{completed.length}/{quests.length} CLEAR</span></div>
         <div className="p-4">
+          <div className="sl-bar mb-3" style={{ height: 6 }}><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${dayPercent}%` }} /></div>
           <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">
             {cloudEnabled ? <>Quests are <span className="sl-glow-purple">AI-generated</span> and scale with your level.</> : <>Complete all quests to avoid <span className="sl-glow-red">PENALTY ZONE</span>.</>}
-            {player && player.streak >= 3 && <><br /><span className="sl-glow-gold">🔥 {player.streak}-day streak! {Math.round((getStreakMultiplier(player.streak) - 1) * 100)}% XP bonus active.</span></>}
+            {player && player.streak >= 3 && <><br /><span className="sl-glow-gold">🔥 {player.streak}-day streak — +{Math.round((getStreakMultiplier(player.streak) - 1) * 100)}% XP active.</span></>}
           </p>
           {allDone && <p className="text-[11px] sl-glow-gold mt-2 sl-pulse">◆ ALL DAILY QUESTS COMPLETE — BONUS AWARDED ◆</p>}
-          <button onClick={handleRegenerate} disabled={regenerating} className="sl-btn w-full mt-3 text-[10px] py-2">{regenerating ? '◆ ANALYZING...' : '🔄 REGENERATE QUESTS'}</button>
+          <button onClick={handleRegenerate} disabled={regenerating} className="sl-btn sl-btn-ghost w-full mt-3 text-[10px] py-2">{regenerating ? '◆ ANALYZING…' : '⟳ REGENERATE QUESTS'}</button>
         </div>
       </div>
       {pending.map((quest, i) => <QuestCard key={quest.id} quest={quest} onComplete={() => completeQuest(quest.id)} onProgress={p => updateQuestProgress(quest.id, p)} hasStealth={!!hasStealth} onSkip={() => useSystem.getState().skipQuest(quest.id)} delay={i * 0.05} />)}
@@ -72,10 +75,10 @@ function QuestCard({ quest, onComplete, onProgress, hasStealth, onSkip, delay }:
           <div className="flex justify-between text-[10px] mb-1"><span className="text-[var(--system-text-dim)]">PROGRESS</span><span className="sl-glow-blue">{quest.progress} / {quest.target}</span></div>
           <div className="sl-bar"><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${percent}%` }} /></div>
         </div>
-        <div className="flex flex-wrap gap-2 mb-3 text-[10px]">
-          <span className="px-2 py-0.5 border border-[var(--system-gold)]/30 sl-glow-gold">+{quest.xpReward} XP</span>
-          <span className="px-2 py-0.5 border border-[var(--system-cyan)]/30 sl-glow-blue">+{quest.pointReward} PP</span>
-          {Object.entries(quest.statReward).map(([stat, val]) => <span key={stat} className="px-2 py-0.5 border border-[var(--system-purple)]/30 sl-glow-purple">+{val} {stat}</span>)}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          <span className="sl-chip sl-glow-gold">+{quest.xpReward} XP</span>
+          <span className="sl-chip sl-glow-blue">+{quest.pointReward} PP</span>
+          {Object.entries(quest.statReward).map(([stat, val]) => <span key={stat} className="sl-chip sl-glow-purple">+{val} {stat}</span>)}
         </div>
         {!isComplete ? (
           <div className="space-y-2">

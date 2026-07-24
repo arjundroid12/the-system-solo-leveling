@@ -41,13 +41,14 @@ export function DungeonView() {
         <div className="sl-window sl-window-glow sl-glow-pulse sl-slide-in">
           <div className="sl-title-bar"><span>◆ GATE ACTIVE</span><span className="ml-auto sl-glow-red sl-pulse text-[10px]">IN PROGRESS</span></div>
           <div className="p-6 text-center">
-            <p className="text-2xl mb-2">{DUNGEON_TYPES[activeDungeon.type].icon}</p>
-            <h2 className="font-display text-xl sl-glow-blue mb-2">{activeDungeon.name}</h2>
-            <div className="font-display text-5xl sl-glow-gold mb-2 tabular-nums">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</div>
-            <div className="sl-bar mb-6"><div className="sl-bar-fill sl-bar-fill-mp" style={{ width: `${percent}%` }} /></div>
-            <div className="text-[10px] text-[var(--system-text-dim)] mb-6 space-y-1">
-              <p>REWARDS: +{activeDungeon.xpReward} XP · +{activeDungeon.pointReward} PP</p>
-              {activeDungeon.shadowEligible && hasShadowSkill && <p className="sl-glow-purple">◆ SHADOW EXTRACTION ELIGIBLE ◆</p>}
+            <p className="text-2xl mb-1">{DUNGEON_TYPES[activeDungeon.type].icon}</p>
+            <h2 className="font-display text-xl sl-glow-blue mb-4">{activeDungeon.name}</h2>
+            <div className="font-display text-6xl sl-glow-gold mb-3 tabular-nums tracking-wider">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</div>
+            <div className="sl-bar mb-5" style={{ height: 6 }}><div className="sl-bar-fill sl-bar-fill-mp" style={{ width: `${percent}%` }} /></div>
+            <div className="flex justify-center flex-wrap gap-1.5 mb-6">
+              <span className="sl-chip sl-glow-gold">+{activeDungeon.xpReward} XP</span>
+              <span className="sl-chip sl-glow-blue">+{activeDungeon.pointReward} PP</span>
+              {activeDungeon.shadowEligible && hasShadowSkill && <span className="sl-chip sl-glow-purple sl-pulse">◆ EXTRACTION READY</span>}
             </div>
             <div className="space-y-2">
               <button onClick={() => { soundClick(); completeDungeon(activeDungeon.id); if (activeDungeon.shadowEligible && hasShadowSkill) setTimeout(() => setShowShadowPrompt(true), 500) }} className="sl-btn sl-btn-gold w-full" disabled={timeLeft > 0}>{timeLeft > 0 ? 'GATE LOCKED' : '◆ CLEAR GATE ◆'}</button>
@@ -89,10 +90,10 @@ export function DungeonView() {
             <div className="sl-title-bar"><span>{d.icon} {d.name.toUpperCase()}</span>{locked && <span className="ml-auto text-[10px] sl-glow-red">LOCKED</span>}</div>
             <div className="p-4">
               <div className="flex items-start gap-3 mb-3"><span className="text-3xl">{d.icon}</span><div className="flex-1"><p className="text-xs text-[var(--system-text-dim)] mb-1">{d.description}</p><p className="text-[10px] text-[var(--system-text-dim)]">Duration: {d.duration} min{locked && ` · Requires Level ${d.minLevel}`}</p></div></div>
-              <div className="flex flex-wrap gap-2 mb-3 text-[10px]">
-                <span className="px-2 py-0.5 border border-[var(--system-gold)]/30 sl-glow-gold">+{rewards.xp} XP</span>
-                <span className="px-2 py-0.5 border border-[var(--system-cyan)]/30 sl-glow-blue">+{rewards.points} PP</span>
-                {rewards.shadowEligible && <span className="px-2 py-0.5 border border-[var(--system-shadow)]/30 sl-glow-shadow">◆ SHADOW</span>}
+              <div className="flex flex-wrap gap-1.5 mb-3">
+                <span className="sl-chip sl-glow-gold">+{rewards.xp} XP</span>
+                <span className="sl-chip sl-glow-blue">+{rewards.points} PP</span>
+                {rewards.shadowEligible && <span className="sl-chip sl-glow-shadow">◆ SHADOW</span>}
               </div>
               <button onClick={() => { soundGateOpen(); startDungeon(type) }} disabled={locked} className="sl-btn w-full text-[11px] py-2.5">{locked ? 'LEVEL LOCKED' : '◆ ENTER GATE ◆'}</button>
             </div>

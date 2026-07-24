@@ -285,8 +285,8 @@ function BossTab() {
 
           {/* Rewards */}
           <div className="flex justify-center gap-2 mb-4 text-[10px]">
-            <span className="px-2 py-0.5 border border-[var(--system-gold)]/30 sl-glow-gold">+{boss.xpReward} XP</span>
-            <span className="px-2 py-0.5 border border-[var(--system-cyan)]/30 sl-glow-blue">+{boss.pointReward} PP</span>
+            <span className="sl-chip sl-glow-gold">+{boss.xpReward} XP</span>
+            <span className="sl-chip sl-glow-blue">+{boss.pointReward} PP</span>
           </div>
 
           {boss.defeatedToday ? (

@@ -51,13 +51,13 @@ export function WorldMap() {
                 <span className="text-3xl">{zone.icon}</span>
                 <div className="flex-1">
                   <p className="text-xs text-[var(--system-text-dim)] mb-2">{zone.description}</p>
-                  <div className="flex flex-wrap gap-2 text-[10px]">
-                    <span className="px-2 py-0.5 border border-[var(--system-gold)]/30 sl-glow-gold">x{zone.xpMultiplier} XP</span>
-                    <span className="px-2 py-0.5 border border-[var(--system-cyan)]/30 sl-glow-blue">x{zone.pointMultiplier} PP</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="sl-chip sl-glow-gold">×{zone.xpMultiplier} XP</span>
+                    <span className="sl-chip sl-glow-blue">×{zone.pointMultiplier} PP</span>
                     {!unlocked && (
                       <>
-                        {!meetsLevel && <span className="px-2 py-0.5 border border-[var(--system-red)]/30 sl-glow-red">LV {zone.minLevel} REQ</span>}
-                        {!meetsRank && <span className="px-2 py-0.5 border border-[var(--system-red)]/30 sl-glow-red">{zone.minRank}-RANK REQ</span>}
+                        {!meetsLevel && <span className="sl-chip sl-glow-red">LV {zone.minLevel} REQ</span>}
+                        {!meetsRank && <span className="sl-chip sl-glow-red">{zone.minRank}-RANK REQ</span>}
                       </>
                     )}
                   </div>

@@ -67,7 +67,7 @@ export function BootScreen() {
 
   if (phase === 'intro') return (
     <div className="sl-app flex flex-col items-center justify-center min-h-screen px-6 text-center">
-      <div className="sl-window sl-window-glow sl-glow-pulse p-12 max-w-sm sl-slide-in">
+      <div className="sl-window sl-window-glow sl-glow-pulse max-w-sm w-full sl-slide-in">
         <div className="sl-title-bar justify-center"><span>[ SYSTEM ]</span></div>
         <div className="p-8">
           <p className="text-xs sl-glow-blue mb-6 tracking-widest">◆ ◆ ◆</p>
@@ -82,7 +82,7 @@ export function BootScreen() {
 
   if (phase === 'autoLogin') return (
     <div className="sl-app flex flex-col items-center justify-center min-h-screen px-6 text-center">
-      <div className="sl-window sl-window-glow sl-glow-pulse p-12 max-w-sm">
+      <div className="sl-window sl-window-glow sl-glow-pulse max-w-sm w-full">
         <div className="sl-title-bar justify-center"><span>[ SYSTEM ]</span></div>
         <div className="p-8">
           <p className="text-xs sl-glow-blue mb-6 tracking-widest sl-pulse">◆ SYNCING ◆</p>
@@ -94,7 +94,7 @@ export function BootScreen() {
 
   if (phase === 'choice') return (
     <div className="sl-app flex flex-col items-center justify-center min-h-screen px-6 text-center">
-      <div className="sl-window sl-window-glow p-8 max-w-sm w-full sl-slide-in">
+      <div className="sl-window sl-window-glow max-w-sm w-full sl-slide-in">
         <div className="sl-title-bar justify-center"><span>[ PLAYER SELECTION ]</span></div>
         <div className="p-6 space-y-3">
           <button onClick={() => { soundClick(); setPhase('register') }} className="sl-btn w-full py-4">◆ NEW PLAYER</button>
@@ -108,7 +108,7 @@ export function BootScreen() {
     const isRegister = phase === 'register'
     return (
       <div className="sl-app flex flex-col items-center justify-center min-h-screen px-6 text-center">
-        <div className="sl-window sl-window-glow p-8 max-w-sm w-full sl-slide-in">
+        <div className="sl-window sl-window-glow max-w-sm w-full sl-slide-in">
           <div className="sl-title-bar justify-center"><span>[ {isRegister ? 'PLAYER REGISTRATION' : 'PLAYER LOGIN'} ]</span></div>
           <div className="p-6 space-y-4">
             <div>
@@ -130,7 +130,7 @@ export function BootScreen() {
 
   return (
     <div className="sl-app flex flex-col items-center justify-center min-h-screen px-6">
-      <div className="sl-window p-6 max-w-sm w-full">
+      <div className="sl-window max-w-sm w-full">
         <div className="sl-title-bar"><span>[ SYSTEM BOOT ]</span></div>
         <div className="p-4 font-mono text-xs">
           {bootLines.map((line, i) => <div key={i} className="sl-glow-blue mb-2 sl-slide-in" style={{ animationDelay: `${i * 0.1}s` }}>{line}</div>)}
