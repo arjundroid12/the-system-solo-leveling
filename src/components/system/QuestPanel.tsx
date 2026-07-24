@@ -46,7 +46,7 @@ export function QuestPanel() {
         <div className="sl-title-bar"><span>◆ DAILY QUESTS</span><span className="ml-auto text-[10px] sl-glow-blue tabular-nums">{completed.length}/{quests.length} CLEAR</span></div>
         <div className="p-4">
           <div className="sl-bar mb-3" style={{ height: 6 }}><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${dayPercent}%` }} /></div>
-          <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">
+          <p className="text-xs text-[var(--system-text-dim)] leading-relaxed">
             {cloudEnabled ? <>Quests are <span className="sl-glow-purple">AI-generated</span> and scale with your level.</> : <>Complete all quests to avoid <span className="sl-glow-red">PENALTY ZONE</span>.</>}
             {player && player.streak >= 3 && <><br /><span className="sl-glow-gold">🔥 {player.streak}-day streak — +{Math.round((getStreakMultiplier(player.streak) - 1) * 100)}% XP active.</span></>}
           </p>
@@ -80,7 +80,7 @@ function QuestCard({ quest, onComplete, onProgress, hasStealth, onSkip, delay }:
     <div className="sl-window sl-slide-in" style={{ animationDelay: `${delay}s` }}>
       <div className="sl-title-bar"><span>{CATEGORY_ICONS[quest.category as keyof typeof CATEGORY_ICONS]} {quest.title.toUpperCase()}</span><span className="ml-auto text-[10px] px-2" style={{ color: diffColor, textShadow: `0 0 6px ${diffColor}` }}>{quest.difficulty}</span></div>
       <div className="p-4">
-        <p className="text-xs text-[var(--system-text-dim)] mb-3 leading-relaxed">{quest.description}</p>
+        <p className="text-[13px] text-[var(--system-text-dim)] mb-3 leading-relaxed">{quest.description}</p>
         <div className="mb-3">
           <div className="flex justify-between text-[10px] mb-1"><span className="text-[var(--system-text-dim)]">PROGRESS</span><span className="sl-glow-blue">{quest.progress} / {quest.target}</span></div>
           <div className="sl-bar"><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${percent}%` }} /></div>

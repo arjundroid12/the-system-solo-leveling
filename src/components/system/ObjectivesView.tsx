@@ -71,7 +71,7 @@ export function ObjectivesView({ onCreated }: { onCreated?: () => void }) {
             </div>
           ) : (
             <div className="p-4 space-y-3">
-              <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">
+              <p className="text-xs text-[var(--system-text-dim)] leading-relaxed">
                 Tell the System what you want to conquer. It will design a <span className="sl-glow-purple">progressive-overload program</span> — a daily quest that starts where you are and climbs as you grow stronger.
               </p>
               <div>
@@ -109,7 +109,7 @@ export function ObjectivesView({ onCreated }: { onCreated?: () => void }) {
               <span className="ml-auto text-[10px] sl-glow-purple">{o.phase?.name || 'GRIND'} · DAY {o.day}</span>
             </div>
             <div className="p-4">
-              <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed mb-3">{o.plan.summary}</p>
+              <p className="text-xs text-[var(--system-text-dim)] leading-relaxed mb-3">{o.plan.summary}</p>
 
               {/* today's prescription */}
               <div className={`border p-3 mb-3 ${todayDone ? 'border-[var(--system-green)]/40 bg-[rgba(61,220,151,0.05)]' : 'border-[var(--system-cyan)]/40 bg-[rgba(93,213,255,0.04)]'}`}>

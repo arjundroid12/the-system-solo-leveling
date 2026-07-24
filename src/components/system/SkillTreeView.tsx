@@ -49,7 +49,7 @@ export function SkillTreeView() {
       <div className="sl-window sl-window-glow sl-slide-in">
         <div className="sl-title-bar"><span>🌳 SKILL TREE</span></div>
         <div className="p-4 text-center">
-          <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">
+          <p className="text-xs text-[var(--system-text-dim)] leading-relaxed">
             Active combat skills for Boss Raids and PvP battles.<br />
             Unlock with level + stat requirements. Class-specific skills require that job.
           </p>

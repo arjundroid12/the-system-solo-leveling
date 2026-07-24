@@ -37,6 +37,11 @@ const NAV_ITEMS: { key: Tab; label: string; icon: string }[] = [
   { key: 'inventory', label: 'BAG', icon: '▣' },
 ]
 
+// Mobile: 4 primary destinations + MORE sheet (9 cramped tabs was the
+// single biggest "not optimized for mobile" problem)
+const MOBILE_PRIMARY: Tab[] = ['status', 'quests', 'dungeons', 'growth']
+const MOBILE_MORE: Tab[] = ['shadows', 'skills', 'arena', 'world', 'inventory']
+
 export default function Home() {
   const booted = useSystem(s => s.booted)
   const player = useSystem(s => s.player)
@@ -46,6 +51,7 @@ export default function Home() {
   const dismissLevelUpCutscene = useSystem(s => s.dismissLevelUpCutscene)
   const [tab, setTab] = useState<Tab>('status')
   const [showAIChat, setShowAIChat] = useState(false)
+  const [showMore, setShowMore] = useState(false)
   const needsOnboarding = useSystem(s => s.needsOnboarding)
   const isRefreshing = useSystem(s => s.isRefreshing)
   const setOnboarded = useSystem(s => s.setOnboarded)
@@ -235,14 +241,51 @@ export default function Home() {
         </main>
       </div>
 
-      {/* ═══ Mobile bottom nav ═══ */}
+      {/* ═══ Mobile bottom nav — 4 primary + MORE ═══ */}
       <nav className="sl-bottom-nav lg:hidden">
-        {NAV_ITEMS.map(item => (
-          <button key={item.key} onClick={() => { soundClick(); setTab(item.key) }} className={`sl-nav-btn ${tab === item.key ? 'active' : ''}`}>
-            <span className="text-base leading-none">{item.icon}</span><span>{item.label}</span>
-          </button>
-        ))}
+        {MOBILE_PRIMARY.map(key => {
+          const item = NAV_ITEMS.find(n => n.key === key)!
+          return (
+            <button key={key} onClick={() => { soundClick(); setTab(key); setShowMore(false) }} className={`sl-nav-btn ${tab === key ? 'active' : ''}`}>
+              <span className="text-xl leading-none">{item.icon}</span><span>{item.label}</span>
+            </button>
+          )
+        })}
+        <button onClick={() => { soundClick(); setShowMore(v => !v) }} className={`sl-nav-btn ${MOBILE_MORE.includes(tab) || showMore ? 'active' : ''}`}>
+          <span className="text-xl leading-none">⋯</span><span>MORE</span>
+        </button>
       </nav>
+
+      {/* MORE sheet */}
+      {showMore && (
+        <div className="lg:hidden fixed inset-0 z-[60]" onClick={() => setShowMore(false)}>
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
+          <div className="absolute bottom-0 left-0 right-0 max-w-[480px] mx-auto px-2 pb-2 sl-sheet-up" onClick={e => e.stopPropagation()}>
+            <div className="sl-window sl-window-glow">
+              <div className="sl-title-bar">
+                <span>◆ ALL SYSTEMS</span>
+                <button onClick={() => setShowMore(false)} className="ml-auto text-[var(--system-text-dim)] text-base leading-none px-2 py-1">✕</button>
+              </div>
+              <div className="p-3 pb-[calc(12px+env(safe-area-inset-bottom))] grid grid-cols-3 gap-2">
+                {MOBILE_MORE.map(key => {
+                  const item = NAV_ITEMS.find(n => n.key === key)!
+                  const isActive = tab === key
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => { soundClick(); setTab(key); setShowMore(false) }}
+                      className={`flex flex-col items-center gap-2 py-4 border transition-colors ${isActive ? 'border-[var(--system-cyan)] bg-[rgba(30,144,255,0.12)] sl-glow-blue' : 'border-[var(--system-border)] text-[var(--system-text-dim)] active:bg-[rgba(30,144,255,0.08)]'}`}
+                    >
+                      <span className="text-2xl leading-none">{item.icon}</span>
+                      <span className="text-[11px] tracking-widest">{item.label}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <LevelUpCutscene data={levelUpCutscene} onDismiss={dismissLevelUpCutscene} />
 

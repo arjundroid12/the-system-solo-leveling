@@ -28,7 +28,7 @@ export function ShadowArmy() {
             <div className="text-center py-6">
               <p className="text-4xl mb-3 opacity-30">💀</p>
               <p className="text-xs text-[var(--system-text-dim)] mb-2">No shadows under your command.</p>
-              {!hasShadowSkill ? <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">Unlock <span className="sl-glow-purple">Shadow Extraction</span> at Level 10<br />by selecting the Necromancer class.</p> : <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">Clear <span className="sl-glow-blue">Deep Work</span> or <span className="sl-glow-blue">Learning</span> gates<br />to extract shadows.</p>}
+              {!hasShadowSkill ? <p className="text-xs text-[var(--system-text-dim)] leading-relaxed">Unlock <span className="sl-glow-purple">Shadow Extraction</span> at Level 10<br />by selecting the Necromancer class.</p> : <p className="text-xs text-[var(--system-text-dim)] leading-relaxed">Clear <span className="sl-glow-blue">Deep Work</span> or <span className="sl-glow-blue">Learning</span> gates<br />to extract shadows.</p>}
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-3 text-center">

@@ -79,7 +79,7 @@ export function DungeonView() {
     <div className="px-4 py-4 space-y-3">
       <div className="sl-window sl-window-glow sl-slide-in">
         <div className="sl-title-bar"><span>◆ GATE SELECTION</span></div>
-        <div className="p-4"><p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">Gates are timed focus sessions. Clear them for XP and rewards.<br />Higher tier gates yield <span className="sl-glow-purple">shadow extraction</span> opportunities.</p></div>
+        <div className="p-4"><p className="text-xs text-[var(--system-text-dim)] leading-relaxed">Gates are timed focus sessions. Clear them for XP and rewards.<br />Higher tier gates yield <span className="sl-glow-purple">shadow extraction</span> opportunities.</p></div>
       </div>
       {(Object.keys(DUNGEON_TYPES) as DungeonType[]).map((type, i) => {
         const d = DUNGEON_TYPES[type]

@@ -310,7 +310,7 @@ function BossTab() {
       )}
 
       <div className="sl-window sl-slide-in p-3">
-        <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed text-center">
+        <p className="text-xs text-[var(--system-text-dim)] leading-relaxed text-center">
           The player who lands the killing blow gets the full rewards + a special title.<br />
           Damage scales with your Army Power. Deploy more shadows for more damage.
         </p>

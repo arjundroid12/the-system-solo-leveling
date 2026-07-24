@@ -19,7 +19,7 @@ export function WorldMap() {
       <div className="sl-window sl-window-glow sl-slide-in">
         <div className="sl-title-bar"><span>🗺️ WORLD MAP</span></div>
         <div className="p-4 text-center">
-          <p className="text-[10px] text-[var(--system-text-dim)] leading-relaxed">
+          <p className="text-xs text-[var(--system-text-dim)] leading-relaxed">
             Unlock new zones by leveling up and ranking up.<br />
             Higher zones give <span className="sl-glow-gold">XP multipliers</span> on all quests and dungeons.
           </p>
