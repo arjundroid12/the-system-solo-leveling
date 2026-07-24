@@ -1,0 +1,12 @@
+{
+  "name": "THE SYSTEM — Player Interface",
+  "short_name": "THE SYSTEM",
+  "description": "Solo Leveling-style real-life RPG system.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#03060f",
+  "theme_color": "#03060f",
+  "categories": ["productivity", "lifestyle", "games"],
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#03060f"/>
+  <polygon points="100,80 412,80 412,432 100,432" fill="none" stroke="#1e90ff" stroke-width="3" opacity="0.4"/>
+  <polygon points="120,100 392,100 392,412 120,412" fill="none" stroke="#5dd5ff" stroke-width="2"/>
+  <text x="256" y="200" font-family="serif" font-size="120" font-weight="bold" fill="#5dd5ff" text-anchor="middle" style="filter: drop-shadow(0 0 12px #1e90ff)">S</text>
+  <text x="256" y="320" font-family="monospace" font-size="36" fill="#ffd966" text-anchor="middle" letter-spacing="6" style="filter: drop-shadow(0 0 8px #ffd966)">SYSTEM</text>
+  <text x="256" y="370" font-family="monospace" font-size="14" fill="#7da3c8" text-anchor="middle" letter-spacing="3">PLAYER INTERFACE</text>
+</svg>
