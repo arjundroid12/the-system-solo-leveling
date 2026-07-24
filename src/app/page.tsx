@@ -122,11 +122,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex relative z-[1]">
+      <div className="sl-scan-line" />
+
       {/* ═══ Desktop side rail ═══ */}
-      <aside className="hidden lg:flex flex-col w-64 shrink-0 sl-side-rail">
-        <div className="px-2 pb-6">
-          <p className="font-display font-bold text-2xl tracking-[0.22em] leading-none">THE<span className="text-[var(--system-violet)]">SYSTEM</span></p>
-          <p className="sl-label-faint mt-2">PLAYER INTERFACE</p>
+      <aside className="hidden lg:flex flex-col w-64 shrink-0 sticky top-0 h-screen border-r border-[rgba(30,144,255,0.18)] bg-gradient-to-b from-[rgba(6,11,24,0.7)] to-[rgba(2,4,9,0.4)] backdrop-blur-md">
+        <div className="px-6 pt-7 pb-5">
+          <p className="font-display text-xl sl-glow-blue leading-none">THE SYSTEM</p>
+          <p className="sl-label-faint mt-2">◆ PLAYER INTERFACE ◆</p>
         </div>
 
         {/* player card */}
@@ -173,12 +175,12 @@ export default function Home() {
       {/* ═══ Main column ═══ */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* mobile header — game HUD */}
-        <header className="lg:hidden sticky top-0 z-40 bg-[rgba(5,6,9,0.8)] backdrop-blur-2xl border-b border-[var(--system-border)]">
+        <header className="lg:hidden sticky top-0 z-40 bg-[rgba(2,4,9,0.82)] backdrop-blur-xl border-b border-[rgba(30,144,255,0.28)]">
           <div className="px-4 pt-2.5 pb-2 max-w-[480px] mx-auto">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <p className="font-display font-bold text-base tracking-[0.2em] leading-none">THE<span className="text-[var(--system-violet)]">SYSTEM</span></p>
-                <span className="sl-chip text-[var(--system-cyan)]">LV {player.level}</span>
+                <p className="font-display text-sm sl-glow-blue leading-none">THE SYSTEM</p>
+                <span className="sl-chip sl-glow-blue">LV {player.level}</span>
               </div>
               <div className="flex items-center gap-2">
                 <BuffChips />
@@ -206,14 +208,14 @@ export default function Home() {
         </header>
 
         {/* desktop header */}
-        <header className="hidden lg:block sticky top-0 z-40 bg-[rgba(5,6,9,0.75)] backdrop-blur-2xl border-b border-[var(--system-border)]">
-          <div className="max-w-3xl mx-auto px-8 py-4 flex items-end justify-between">
-            <h1 className="sl-numeral text-4xl uppercase tracking-[0.1em]">{activeNav?.label}</h1>
-            <div className="flex items-center gap-2.5 pb-1">
+        <header className="hidden lg:block sticky top-0 z-40 bg-[rgba(2,4,9,0.82)] backdrop-blur-xl border-b border-[rgba(30,144,255,0.28)]">
+          <div className="max-w-3xl mx-auto px-8 py-4 flex items-center justify-between">
+            <h1 className="font-display text-xl sl-glow-blue">{activeNav?.icon} {activeNav?.label}</h1>
+            <div className="flex items-center gap-3">
               <BuffChips />
-              <span className="sl-chip !bg-[rgba(255,84,112,0.12)] text-[var(--system-red)] tabular-nums">HP {player.hp}/{player.hpMax}</span>
-              <span className="sl-chip !bg-[rgba(86,217,255,0.1)] text-[var(--system-cyan)] tabular-nums">MP {player.mp}/{player.mpMax}</span>
-              <span className="sl-chip !bg-[rgba(255,201,77,0.12)] text-[var(--system-gold)] tabular-nums">PP {player.playerPoints}</span>
+              <span className="sl-chip"><span className="sl-label-faint">HP</span><span className="sl-glow-red tabular-nums">{player.hp}/{player.hpMax}</span></span>
+              <span className="sl-chip"><span className="sl-label-faint">MP</span><span className="sl-glow-blue tabular-nums">{player.mp}/{player.mpMax}</span></span>
+              <span className="sl-chip"><span className="sl-label-faint">PP</span><span className="sl-glow-gold tabular-nums">{player.playerPoints}</span></span>
             </div>
           </div>
         </header>
@@ -247,8 +249,8 @@ export default function Home() {
       {/* AI Coach */}
       <button
         onClick={() => { soundClick(); setShowAIChat(true) }}
-        className="fixed bottom-[92px] lg:bottom-6 right-4 z-50 w-13 h-13 p-3.5 rounded-2xl text-white text-lg leading-none sl-glow-pulse"
-        style={{ background: 'linear-gradient(135deg, rgba(139,108,255,0.95), rgba(79,141,255,0.9))', boxShadow: '0 8px 28px rgba(139,108,255,0.45), inset 0 1px 0 rgba(255,255,255,0.25)' }}
+        className="fixed bottom-24 lg:bottom-5 right-4 z-50 w-12 h-12 border-2 border-[var(--system-cyan)] bg-[rgba(12,21,40,0.85)] backdrop-blur flex items-center justify-center text-xl sl-glow-blue sl-glow-pulse"
+        style={{ clipPath: 'polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)' }}
         aria-label="AI Coach"
       >
         ◆

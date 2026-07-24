@@ -30,11 +30,11 @@ export function StatusWindow() {
             {/* level block */}
             <div className="shrink-0 text-center">
               <p className="sl-label-faint">LEVEL</p>
-              <p className="sl-numeral text-7xl tabular-nums mt-1">{player.level}</p>
+              <p className="font-display text-5xl sl-glow-blue leading-none mt-1 tabular-nums">{player.level}</p>
             </div>
-            <div className="w-px self-stretch bg-[var(--system-border)]" />
+            <div className="w-px self-stretch bg-[var(--system-border)] opacity-60" />
             <div className="min-w-0 flex-1">
-              <h1 className="font-display font-bold text-3xl uppercase tracking-[0.06em] leading-tight truncate">{player.name}</h1>
+              <h1 className="font-display text-2xl sl-glow-blue leading-tight truncate">{player.name}</h1>
               <p className="text-[11px] sl-glow-purple mt-1 truncate">"{player.title || 'The Player'}"</p>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {player.job !== 'NONE' && <span className="sl-chip sl-glow-purple">{JOB_CLASSES[player.job].icon} {JOB_CLASSES[player.job].name.toUpperCase()}</span>}
