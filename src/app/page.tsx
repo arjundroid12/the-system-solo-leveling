@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import { useSystem } from '@/lib/store'
-import { useCloudSync, isLoggedIn } from '@/lib/cloudSync'
+import { useCloudSync } from '@/lib/cloudSync'
 import { BootScreen } from '@/components/system/BootScreen'
 import { StatusWindow } from '@/components/system/StatusWindow'
 import { QuestPanel } from '@/components/system/QuestPanel'
 import { DungeonView } from '@/components/system/DungeonView'
 import { ShadowArmy } from '@/components/system/ShadowArmy'
 import { SkillsPanel } from '@/components/system/SkillsPanel'
-import { SkillTreeView } from '@/components/system/SkillTreeView'
 import { InventoryShop } from '@/components/system/InventoryShop'
 import { ArenaView } from '@/components/system/ArenaView'
 import { WorldMap } from '@/components/system/WorldMap'
@@ -18,18 +17,21 @@ import { AIChatPanel } from '@/components/system/AIChatPanel'
 import { SystemNotifications } from '@/components/system/SystemNotifications'
 import { LevelUpCutscene } from '@/components/system/LevelUpCutscene'
 import { setSoundEnabled, soundClick, soundNotification } from '@/lib/sound'
-import { getAuth } from '@/lib/auth'
-import { apiPull } from '@/lib/auth'
+import { getAuth, apiPull } from '@/lib/auth'
 import { xpForLevel, hpFromStats, mpFromStats, fatigueMaxFromStats } from '@/lib/system'
 
 type Tab = 'status' | 'quests' | 'dungeons' | 'shadows' | 'skills' | 'arena' | 'world' | 'growth' | 'inventory'
 
 const NAV_ITEMS: { key: Tab; label: string; icon: string }[] = [
-  { key: 'status', label: 'STATUS', icon: '◈' }, { key: 'quests', label: 'QUESTS', icon: '◆' },
-  { key: 'dungeons', label: 'GATES', icon: '⚔' }, { key: 'shadows', label: 'ARMY', icon: '💀' },
-  { key: 'skills', label: 'SKILLS', icon: '✦' }, { key: 'arena', label: 'ARENA', icon: '🏆' },
-  { key: 'world', label: 'WORLD', icon: '🗺️' }, { key: 'growth', label: 'GROWTH', icon: '🚀' },
-  { key: 'inventory', label: 'BAG', icon: '🎒' },
+  { key: 'status', label: 'STATUS', icon: '◈' },
+  { key: 'quests', label: 'QUESTS', icon: '◆' },
+  { key: 'dungeons', label: 'GATES', icon: '⌖' },
+  { key: 'shadows', label: 'ARMY', icon: '☠' },
+  { key: 'skills', label: 'SKILLS', icon: '✦' },
+  { key: 'arena', label: 'ARENA', icon: '⚔' },
+  { key: 'world', label: 'WORLD', icon: '⬡' },
+  { key: 'growth', label: 'GROWTH', icon: '↗' },
+  { key: 'inventory', label: 'BAG', icon: '▣' },
 ]
 
 export default function Home() {
@@ -51,7 +53,7 @@ export default function Home() {
   useEffect(() => { setSoundEnabled(soundEnabled) }, [soundEnabled])
   useEffect(() => { if (booted) { generateQuestsIfNewDay(); useSystem.getState().checkLoginBonus() } }, [booted, generateQuestsIfNewDay])
 
-  // Manual refresh function — force-fetch from server, bypass all caches
+  // Manual refresh — force-fetch from server
   const handleRefresh = async () => {
     const auth = getAuth()
     if (!auth) return
@@ -62,7 +64,6 @@ export default function Home() {
       if (data && data.player) {
         const p = data.player
         const currentState = useSystem.getState()
-        // Cloud wins if higher progression
         const cloudProgress = (p.level || 1) * 100000 + (p.xp || 0)
         const localProgress = (currentState.player?.level || 1) * 100000 + (currentState.player?.xp || 0)
         if (cloudProgress >= localProgress) {
@@ -90,88 +91,130 @@ export default function Home() {
 
   if (!booted || !player) return <BootScreen />
 
-  // ONBOARDING GATE: new accounts must select a growth path before main UI
+  // Onboarding gate — new accounts pick a growth path (skippable)
   if (needsOnboarding) {
     return (
-      <div className="sl-app-wrapper min-h-screen">
-        <div className="max-w-md mx-auto pt-4 px-4">
-          <div className="text-center mb-4">
-            <p className="font-display text-lg sl-glow-blue">THE SYSTEM</p>
-            <p className="text-[9px] text-[var(--system-text-dim)] tracking-widest mt-1">◆ FIRST-TIME SETUP ◆</p>
+      <div className="min-h-screen relative z-[1]">
+        <div className="max-w-md mx-auto pt-6 px-4 pb-10">
+          <div className="text-center mb-5">
+            <p className="font-display text-xl sl-glow-blue">THE SYSTEM</p>
+            <p className="sl-label mt-1.5">◆ FIRST-TIME SETUP · CHOOSE YOUR PATH ◆</p>
           </div>
           <GrowthPlanView onPathSelected={() => setOnboarded()} />
+          <button onClick={() => { soundClick(); setOnboarded() }} className="sl-btn sl-btn-ghost w-full mt-4 text-[10px]">
+            SKIP FOR NOW — CHOOSE LATER IN GROWTH
+          </button>
         </div>
         <SystemNotifications />
       </div>
     )
   }
 
+  const activeNav = NAV_ITEMS.find(n => n.key === tab)
+  const hpPct = Math.max(0, Math.min(100, (player.hp / player.hpMax) * 100))
+  const mpPct = Math.max(0, Math.min(100, (player.mp / player.mpMax) * 100))
+  const xpPct = Math.max(0, Math.min(100, (player.xp / player.xpToNext) * 100))
+
   return (
-    <div className="sl-app-wrapper min-h-screen flex">
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 border-r border-[var(--system-border)] bg-[var(--system-darker)]/80 backdrop-blur-md sticky top-0 h-screen">
-        <div className="p-6 border-b border-[var(--system-border)]">
-          <p className="font-display text-lg sl-glow-blue leading-none">THE SYSTEM</p>
-          <p className="text-[9px] text-[var(--system-text-dim)] tracking-widest mt-1">◆ PLAYER INTERFACE ◆</p>
+    <div className="min-h-screen flex relative z-[1]">
+      <div className="sl-scan-line" />
+
+      {/* ═══ Desktop side rail ═══ */}
+      <aside className="hidden lg:flex flex-col w-64 shrink-0 sticky top-0 h-screen border-r border-[rgba(30,144,255,0.18)] bg-gradient-to-b from-[rgba(6,11,24,0.7)] to-[rgba(2,4,9,0.4)] backdrop-blur-md">
+        <div className="px-6 pt-7 pb-5">
+          <p className="font-display text-xl sl-glow-blue leading-none">THE SYSTEM</p>
+          <p className="sl-label-faint mt-2">◆ PLAYER INTERFACE ◆</p>
         </div>
-        <div className="p-4 border-b border-[var(--system-border)]">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full border-2 border-[var(--system-cyan)] flex items-center justify-center sl-glow-blue"><span className="font-display text-lg">{player.name[0]?.toUpperCase()}</span></div>
-            <div>
-              <p className="text-sm sl-glow-blue font-display">{player.name}</p>
-              <p className="text-[10px] text-[var(--system-text-dim)]">LV {player.level} {player.job !== 'NONE' && `· ${player.job}`} · "{player.title || 'The Player'}"</p>
-              {(player.streak || 0) >= 3 && <p className="text-[10px] sl-glow-gold">🔥 {player.streak}-day streak</p>}
+
+        {/* player card */}
+        <div className="mx-4 mb-4 sl-window">
+          <div className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 shrink-0 border-2 border-[var(--system-cyan)] flex items-center justify-center sl-glow-blue" style={{ clipPath: 'polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)' }}>
+                <span className="font-display text-lg">{player.name[0]?.toUpperCase()}</span>
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm sl-glow-blue font-display truncate">{player.name}</p>
+                <p className="sl-label mt-0.5">LV {player.level}{player.job !== 'NONE' ? ` · ${player.job}` : ''}</p>
+              </div>
             </div>
-          </div>
-          <div className="mt-3">
-            <div className="flex justify-between text-[9px] mb-1"><span className="text-[var(--system-text-dim)]">XP</span><span className="sl-glow-gold">{player.xp}/{player.xpToNext}</span></div>
-            <div className="sl-bar h-1"><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${(player.xp / player.xpToNext) * 100}%` }} /></div>
+            <p className="text-[10px] sl-glow-purple mt-2 truncate">"{player.title || 'The Player'}"</p>
+            <div className="mt-3">
+              <div className="flex justify-between text-[9px] mb-1"><span className="sl-label">XP</span><span className="sl-glow-gold tabular-nums">{player.xp}/{player.xpToNext}</span></div>
+              <div className="sl-bar" style={{ height: 5 }}><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${xpPct}%` }} /></div>
+            </div>
+            {(player.streak || 0) >= 3 && <p className="text-[10px] sl-glow-gold mt-2">🔥 {player.streak}-DAY STREAK</p>}
           </div>
         </div>
-        <nav className="flex-1 p-3 space-y-1">
+
+        {/* nav */}
+        <nav className="flex-1 px-4 space-y-0.5 overflow-y-auto">
           {NAV_ITEMS.map(item => (
-            <button key={item.key} onClick={() => setTab(item.key)} className={`w-full flex items-center gap-3 px-4 py-3 text-xs tracking-widest transition-colors ${tab === item.key ? 'bg-[var(--system-blue)]/10 border-l-2 border-[var(--system-cyan)] sl-glow-blue' : 'text-[var(--system-text-dim)] hover:text-[var(--system-cyan)] hover:bg-[var(--system-blue)]/5 border-l-2 border-transparent'}`}>
-              <span className="text-lg">{item.icon}</span>{item.label}
+            <button key={item.key} onClick={() => { soundClick(); setTab(item.key) }} className={`sl-rail-btn ${tab === item.key ? 'active' : ''}`}>
+              <span className="text-base leading-none w-5 text-center">{item.icon}</span>{item.label}
             </button>
           ))}
         </nav>
-        <div className="p-4 border-t border-[var(--system-border)]">
-          <button onClick={handleRefresh} disabled={isRefreshing} className="sl-btn w-full text-[10px] py-2 mb-2">
-            {isRefreshing ? '◆ SYNCING...' : '🔄 REFRESH'}
+
+        <div className="p-4 border-t border-[rgba(30,144,255,0.18)]">
+          <button onClick={handleRefresh} disabled={isRefreshing} className="sl-btn sl-btn-ghost w-full text-[10px] py-2 mb-3">
+            {isRefreshing ? '◆ SYNCING…' : '⟳ FORCE SYNC'}
           </button>
-          <div className="flex items-center gap-2 text-[10px] text-[var(--system-text-dim)]"><span className={`w-2 h-2 rounded-full ${isRefreshing ? 'bg-yellow-500 sl-pulse' : 'bg-green-500 sl-pulse'}`} />{isRefreshing ? 'SYNCING...' : 'CLOUD SYNCED'}</div>
+          <div className="flex items-center gap-2 sl-label">
+            <span className={`w-1.5 h-1.5 rounded-full ${isRefreshing ? 'bg-[var(--system-gold)]' : 'bg-[var(--system-green)]'} sl-pulse`} />
+            {isRefreshing ? 'SYNCING…' : 'CLOUD SYNCED'}
+          </div>
         </div>
       </aside>
 
-      {/* Main Content */}
+      {/* ═══ Main column ═══ */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Mobile Header */}
-        <header className="md:hidden sticky top-0 z-40 bg-[var(--system-darker)]/80 backdrop-blur-md border-b border-[var(--system-border)]">
-          <div className="px-4 py-3 flex items-center justify-between">
-            <div><p className="font-display text-sm sl-glow-blue leading-none">THE SYSTEM</p><p className="text-[9px] text-[var(--system-text-dim)] tracking-widest mt-0.5">LV {player.level} · {player.name}</p></div>
-            <div className="text-right flex items-center gap-2">
-              <button onClick={handleRefresh} disabled={isRefreshing} className="sl-btn px-2 py-1 text-[9px]" title="Force sync">
-                {isRefreshing ? '...' : '🔄'}
-              </button>
-              <div><p className="text-[9px] text-[var(--system-text-dim)]">XP</p><p className="text-[10px] sl-glow-gold tabular-nums">{player.xp} / {player.xpToNext}</p></div>
+        {/* mobile header — game HUD */}
+        <header className="lg:hidden sticky top-0 z-40 bg-[rgba(2,4,9,0.82)] backdrop-blur-xl border-b border-[rgba(30,144,255,0.28)]">
+          <div className="px-4 pt-2.5 pb-2 max-w-[480px] mx-auto">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <p className="font-display text-sm sl-glow-blue leading-none">THE SYSTEM</p>
+                <span className="sl-chip sl-glow-blue">LV {player.level}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {(player.streak || 0) >= 3 && <span className="text-[10px] sl-glow-gold">🔥{player.streak}</span>}
+                <button onClick={handleRefresh} disabled={isRefreshing} className="sl-btn sl-btn-ghost px-2 py-1 text-[10px]" title="Force sync">
+                  {isRefreshing ? '…' : '⟳'}
+                </button>
+              </div>
             </div>
-          </div>
-        </header>
-        {/* Desktop Header */}
-        <header className="hidden md:flex sticky top-0 z-40 bg-[var(--system-darker)]/80 backdrop-blur-md border-b border-[var(--system-border)] px-8 py-4">
-          <div className="max-w-3xl w-full flex items-center justify-between">
-            <h1 className="font-display text-xl sl-glow-blue">{NAV_ITEMS.find(n => n.key === tab)?.icon} {NAV_ITEMS.find(n => n.key === tab)?.label}</h1>
-            <div className="flex items-center gap-6 text-xs">
-              <div className="text-center"><p className="text-[9px] text-[var(--system-text-dim)]">HP</p><p className="sl-glow-red">{player.hp}/{player.hpMax}</p></div>
-              <div className="text-center"><p className="text-[9px] text-[var(--system-text-dim)]">MP</p><p className="sl-glow-blue">{player.mp}/{player.mpMax}</p></div>
-              <div className="text-center"><p className="text-[9px] text-[var(--system-text-dim)]">PP</p><p className="sl-glow-gold">{player.playerPoints}</p></div>
-              {(player.streak || 0) >= 3 && <div className="text-center"><p className="text-[9px] text-[var(--system-text-dim)]">STREAK</p><p className="sl-glow-gold">🔥 {player.streak}</p></div>}
+            <div className="grid grid-cols-3 gap-2.5 mt-2">
+              <div>
+                <div className="flex justify-between text-[8px] mb-0.5"><span className="sl-label-faint">HP</span><span className="text-[var(--system-red)] tabular-nums">{player.hp}</span></div>
+                <div className="sl-bar" style={{ height: 4 }}><div className="sl-bar-fill sl-bar-fill-hp" style={{ width: `${hpPct}%` }} /></div>
+              </div>
+              <div>
+                <div className="flex justify-between text-[8px] mb-0.5"><span className="sl-label-faint">MP</span><span className="text-[var(--system-cyan)] tabular-nums">{player.mp}</span></div>
+                <div className="sl-bar" style={{ height: 4 }}><div className="sl-bar-fill sl-bar-fill-mp" style={{ width: `${mpPct}%` }} /></div>
+              </div>
+              <div>
+                <div className="flex justify-between text-[8px] mb-0.5"><span className="sl-label-faint">XP</span><span className="text-[var(--system-gold)] tabular-nums">{player.xp}/{player.xpToNext}</span></div>
+                <div className="sl-bar" style={{ height: 4 }}><div className="sl-bar-fill sl-bar-fill-xp" style={{ width: `${xpPct}%` }} /></div>
+              </div>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 pb-20 md:pb-8">
-          <div className="md:max-w-3xl md:mx-auto md:px-8 md:py-6 sl-app md:sl-app-none">
+        {/* desktop header */}
+        <header className="hidden lg:block sticky top-0 z-40 bg-[rgba(2,4,9,0.82)] backdrop-blur-xl border-b border-[rgba(30,144,255,0.28)]">
+          <div className="max-w-3xl mx-auto px-8 py-4 flex items-center justify-between">
+            <h1 className="font-display text-xl sl-glow-blue">{activeNav?.icon} {activeNav?.label}</h1>
+            <div className="flex items-center gap-3">
+              <span className="sl-chip"><span className="sl-label-faint">HP</span><span className="sl-glow-red tabular-nums">{player.hp}/{player.hpMax}</span></span>
+              <span className="sl-chip"><span className="sl-label-faint">MP</span><span className="sl-glow-blue tabular-nums">{player.mp}/{player.mpMax}</span></span>
+              <span className="sl-chip"><span className="sl-label-faint">PP</span><span className="sl-glow-gold tabular-nums">{player.playerPoints}</span></span>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1">
+          <div key={tab} className="sl-slide-in max-w-[480px] lg:max-w-3xl mx-auto w-full lg:px-8 lg:py-6 pb-24 lg:pb-10">
             {tab === 'status' && <StatusWindow />}
             {tab === 'quests' && <QuestPanel />}
             {tab === 'dungeons' && <DungeonView />}
@@ -185,28 +228,26 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Mobile Bottom Nav */}
-      <nav className="sl-bottom-nav md:hidden">
+      {/* ═══ Mobile bottom nav ═══ */}
+      <nav className="sl-bottom-nav lg:hidden">
         {NAV_ITEMS.map(item => (
-          <button key={item.key} onClick={() => setTab(item.key)} className={`sl-nav-btn ${tab === item.key ? 'active' : ''}`}>
-            <span className="text-lg leading-none">{item.icon}</span><span>{item.label}</span>
+          <button key={item.key} onClick={() => { soundClick(); setTab(item.key) }} className={`sl-nav-btn ${tab === item.key ? 'active' : ''}`}>
+            <span className="text-base leading-none">{item.icon}</span><span>{item.label}</span>
           </button>
         ))}
       </nav>
 
       <LevelUpCutscene data={levelUpCutscene} onDismiss={dismissLevelUpCutscene} />
 
-      {/* Floating AI Chat Button */}
+      {/* AI Coach */}
       <button
         onClick={() => { soundClick(); setShowAIChat(true) }}
-        className="fixed bottom-20 md:bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-[var(--system-blue)] to-[var(--system-purple)] border-2 border-[var(--system-cyan)] flex items-center justify-center text-2xl sl-glow-pulse"
-        style={{ boxShadow: '0 0 20px rgba(30, 144, 255, 0.5)' }}
+        className="fixed bottom-24 lg:bottom-5 right-4 z-50 w-12 h-12 border-2 border-[var(--system-cyan)] bg-[rgba(12,21,40,0.85)] backdrop-blur flex items-center justify-center text-xl sl-glow-blue sl-glow-pulse"
+        style={{ clipPath: 'polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)' }}
         aria-label="AI Coach"
       >
         ◆
       </button>
-
-      {/* AI Chat Panel */}
       {showAIChat && <AIChatPanel onClose={() => setShowAIChat(false)} />}
 
       <SystemNotifications />
