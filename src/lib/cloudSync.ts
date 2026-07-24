@@ -4,6 +4,7 @@ import { useEffect, useRef, useCallback } from 'react'
 import { useSystem } from './store'
 import { getAuth, apiPull, apiPush, apiGenerateQuests, getTimeOfDay } from './auth'
 import { xpForLevel, hpFromStats, mpFromStats, fatigueMaxFromStats } from './system'
+import { logout } from './auth-helpers'
 
 // ════════════════════════════════════════════════════════════════
 // TIMESTAMP-BASED SYNC (v6 — no more DELETE ALL)
@@ -73,6 +74,17 @@ export function useCloudSync() {
 
     try {
       const data = await apiPull(auth.token)
+
+      // ═══ AUTO-HEAL: account was deleted from the cloud ═══
+      // Without this, a device with cached state keeps showing a ghost
+      // of the dead account forever (sync fails silently every time).
+      if (data?.accountGone) {
+        console.warn('[SYNC] Account no longer exists in cloud — resetting this device to login')
+        logout()
+        window.location.reload()
+        return
+      }
+
       if (!data || !data.player) { isPulling.current = false; return }
 
       const cloudPlayer = data.player
@@ -172,6 +184,11 @@ export function useCloudSync() {
       isPulling.current = false
     }
   }, [])
+
+  // Initial pull on mount — fresh data on open + immediate dead-account detection
+  useEffect(() => {
+    if (getAuth()) pullFromCloud()
+  }, [pullFromCloud])
 
   // Polling: every 15 seconds when tab visible
   useEffect(() => {

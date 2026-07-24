@@ -3,6 +3,7 @@
 import { useSystem } from '@/lib/store'
 import { STAT_INFO, StatKey, JOB_CLASSES, ACHIEVEMENTS } from '@/lib/system'
 import { soundStatUp } from '@/lib/sound'
+import { logout } from '@/lib/auth-helpers'
 
 export function StatusWindow() {
   const player = useSystem(s => s.player)
@@ -117,6 +118,24 @@ export function StatusWindow() {
             </div>
           </div>
           {JOB_CLASSES[player.job].bonuses && <p className="text-[10px] text-[var(--system-gold)] mt-2">{JOB_CLASSES[player.job].bonuses}</p>}
+        </div>
+      </div>
+
+      <div className="sl-window sl-slide-in" style={{ animationDelay: '0.4s' }}>
+        <div className="sl-title-bar"><span>◆ ACCOUNT</span></div>
+        <div className="p-4 flex items-center justify-between gap-3">
+          <p className="text-[10px] text-[var(--system-text-dim)] tracking-widest">LOGGED IN AS <span className="sl-glow-blue">{player.name?.toUpperCase()}</span></p>
+          <button
+            onClick={() => {
+              if (window.confirm('Log out of this device? Anything not yet synced to the cloud will be lost.')) {
+                logout()
+                window.location.reload()
+              }
+            }}
+            className="px-4 py-2 border border-[var(--system-red)]/50 text-[var(--system-red)] text-[10px] tracking-widest hover:border-[var(--system-red)] hover:bg-[var(--system-red)]/10"
+          >
+            LOGOUT
+          </button>
         </div>
       </div>
     </div>

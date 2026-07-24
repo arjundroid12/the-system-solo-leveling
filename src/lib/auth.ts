@@ -31,6 +31,9 @@ export async function apiLogin(username: string, password: string): Promise<{ su
 export async function apiPull(token: string): Promise<any | null> {
   try {
     const res = await fetch('/api/sync', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ action: 'pull' }) })
+    // Account deleted or token invalid — signal it so the client can reset,
+    // instead of looking identical to a network failure
+    if (res.status === 404 || res.status === 401) return { accountGone: true }
     if (!res.ok) return null
     return await res.json()
   } catch { return null }
